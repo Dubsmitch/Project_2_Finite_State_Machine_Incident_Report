@@ -24,11 +24,51 @@ public class Command {
 	/** information regarding resolution **/
 	public static final String CC_DUPLICATE = "Duplicate";
 	/** information about cancellation **/
+	public static final String CC_UNNECESSARY = "Unnecessary";
+	/** information about cancellation **/
+	public static final String CC_NOT_AN_INCIDENT = "Not and incident";
 	
+	/** field for ownerID **/
+	private String ownerId;
+	/** field for note **/
+	private String note;
+	
+	/** instance of the cancelation code **/
+	//need to make the inner class first
+	private final CancellationCode cancellationCode;
+	/** instance of the resolution code **/
+	//need to make the inner class before this will compile
+	private final ResolutionCode resolutionCode;
+	/** instance of the on hold reason **/
+	//need to make the inner class
+	private final OnHoldReason onHoldReason;
+	/** instance of command value **/
+	//need to make the inner class first
+	private final CommandValue c;
+	
+	public Command (CommandValue c, String ownerId,
+			OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
+			CancellationCode cancellationCode, String note) {
+	
+	this.c = c;
+	this.onHoldReason = onHoldReason;
+	this.resolutionCode = resolutionCode;
+	this.cancellationCode = cancellationCode;
+	
+	this.ownerId = ownerId;
+	this.note = note;
+	}
 	
 	//inner classes enum
 	//CancellationCode
 	//ResolutionCode 
 	//OnHoldReason
 	//CommandValue
+	public enum CommandValue {INVESTIGATE, HOLD, RESOLVE, CONFIRM, REOPEN, CANCEL}
+	
+	public enum OnHoldReason {AWAITING_CALLER, AWAITING_CHANGE, AWAITING_VENDOR}
+	
+	public enum ResolutionCode {PERMANENTLY_SOLVED, WORKAROUND, NOT_SOLVED, CALLER_CLOSED}
+	
+	public enum CancellationCode{DUPLICATE, UNNECESSARY, NOT_AN_INCIDENT}
 }
