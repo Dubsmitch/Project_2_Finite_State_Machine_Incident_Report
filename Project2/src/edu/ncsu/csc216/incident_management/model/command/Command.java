@@ -38,16 +38,16 @@ public class Command {
 	
 	/** instance of the cancelation code **/
 	//need to make the inner class first
-	private final CancellationCode cancellationCode;
+	private CancellationCode cancellationCode;
 	/** instance of the resolution code **/
 	//need to make the inner class before this will compile
-	private final ResolutionCode resolutionCode;
+	private ResolutionCode resolutionCode;
 	/** instance of the on hold reason **/
 	//need to make the inner class
-	private final OnHoldReason onHoldReason;
+	private OnHoldReason onHoldReason;
 	/** instance of command value **/
 	//need to make the inner class first
-	private final CommandValue c;
+	private CommandValue c;
 	/**
 	 * constructor for a command
 	 * 
