@@ -59,6 +59,30 @@ public class Command {
 	this.note = note;
 	}
 	
+	public CommandValue getCommand() {
+		return this.c;
+	}
+	
+	public String getOwnerId() {
+		return this.ownerId;
+	}
+	
+	public ResolutionCode getResolutionCode() {
+		return this.resolutionCode;
+	}
+	
+	public String getWorkNote() {
+		return this.note;
+	}
+	
+	public OnHoldReason getOnHoldReason() {
+		return this.onHoldReason;
+	}
+	
+	public CancellationCode getCancellationCode() {
+		return this.cancellationCode;
+	}
+	
 	//inner classes enum
 	//CancellationCode
 	//ResolutionCode 
