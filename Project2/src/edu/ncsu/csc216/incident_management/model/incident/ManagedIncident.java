@@ -98,110 +98,250 @@ public class ManagedIncident {
 	/** instance of Managed Incident list **/
 	private ManagedIncidentList incidents;
 	
+	
+	/**
+	 * Constructs a managed incident
+	 * 
+	 * @param caller
+	 * 		The caller creating the incident
+	 * @param category
+	 * 		the category of the incident
+	 * @param priority
+	 * 		the priority of the incident
+	 * @param name
+	 * 		the name of the incident
+	 * @param workNote
+	 * 		the work note associated with the incident
+	 */
 	public ManagedIncident (String caller, Category category, Priority priority, String name, String workNote) {
 		//make me
 	}
-	
-	public ManagedIncident(Incident i) {
+	/**
+	 * creates an incident
+	 * @param incident
+	 * 		the new incident
+	 */
+	public ManagedIncident(Incident incident) {
 		//makes an incident
 	}
-
+	/**
+	 * increments the counter (keep track of incident)
+	 */
 	public static void incrementCounter() {
 		counter = counter + 1;
 	}
-	
+	/**
+	 * gets the incident id
+	 * @return int
+	 * 		the incident id
+	 */
 	public int getIncidentId() {
 		return 0;
 	}
-	
+	/**
+	 * returns the change request
+	 * @return String
+	 * 		the change request
+	 */
 	public String getChangeRequest() {
 		return null;
 	}
-	
+	/**
+	 * returns the category of the current
+	 * Incident
+	 * 
+	 * @return Category
+	 * 		the category of the incident
+	 */
 	public Category getCategory() {
 		return null;
 	}
-	
+	/**
+	 * returns the category of the current Incident
+	 * 
+	 * @return String
+	 * 		the category of the incident in string form
+	 */
 	public String getCategoryString() {
 		return null;
 	}
 	
+	/**
+	 * sets the category
+	 * @param String
+	 * 		the category to set the incident too
+	 */
 	private void setCategory(String string) {
 		//create this
 	}
 	
+	/**
+	 * returns the priority of the incident in string form
+	 * @return String
+	 * 		the priority of the incident
+	 */
 	public String getPriorityString() {
 		return null;
 	}
 	
+	/**
+	 * sets the priority of an incident
+	 * @param string
+	 * 		the string to set the priority of the incident to   
+	 */
 	private void setPriority(String string) {
 		// create this
 	}
-	
+	/**
+	 * returns the on hold reason associated with
+	 * the current incident
+	 * 
+	 * @return String
+	 * 		the on hold reason associated with 
+	 * 		the incident
+	 */
 	public String getOnHoldReasonString() {
 		return null;
 	}
-	
+	/**
+	 * Sets the on hold reason for the current Incident
+	 * @param string
+	 */
 	private void setOnHoldReason(String string) {
 		//create this
 	}
-	
+	/**
+	 * returns the cancellation code associated with the current Incident
+	 * 
+	 * @return String
+	 * 		the string of the cancellation
+	 * 		code associated with the Incident
+	 */
 	public String getCancellationCodeString() {
 		return null;
 	}
-	
+	/**
+	 * sets the cancellation code to be associated with the current Incident
+	 * 
+	 * @param string
+	 * 		the cancellation code to be associated with the Incident
+	 */
 	private void setCancellationCode(String string) {
 		//create this
 	}
-	
+	/**
+	 * returns the incident state associated with the current Incident
+	 * 
+	 * @return IncidentState
+	 * 		the incident state associated with the Incident
+	 */
 	public IncidentState getState() {
 		return null;
 	}
-	
+	/**
+	 * sets the State of the current Incident
+	 * 
+	 * @param String
+	 * 		the state to set the current state to
+	 */
 	private void setState (String string) {
 		//create this
 	}
-	
+
+	/**
+	 * returns the resolution code associated with the current Incident
+	 * 
+	 * @return ResolutionCode
+	 * 		the resolution code associated with the Incident
+	 */
 	public ResolutionCode getResolutionCode() {
 		return null;
 	}
-	
+	/**
+	 * returns the resolution code associated with the current Incident
+	 * 
+	 * @return String
+	 * 		the resolution code associated with the Incident
+	 */
 	public String getResolutionCodeString () {
 		return null;
 	}
-	
+	/**
+	 * sets the resolution code of the current Incident
+	 * 
+	 * @param String
+	 * 		the resolution code to be associated with the Incident
+	 */
 	private void setResolutionCode(String string) {
 		//create this
 	}
-	
+	/**
+	 * returns the Owner associated with the current Incident
+	 * 
+	 * @return String
+	 * 		the owner associated with the Incident
+	 */
 	public String getOwner() {
 		return owner;
 	}
-	
+	/**
+	 * returns the name associated with the current Incident
+	 * 
+	 * @return String
+	 * 		the name associated with the Incident
+	 */
 	public String getName() {
 		return name;
 	}
-	
+	/**
+	 * returns the caller information associated
+	 * with the Incident
+	 * @return String
+	 * 		the caller
+	 */
 	public String getCaller() {
 		return caller;
 	}
-	
+	/**
+	 * returns the arraylist (a list) of strings
+	 * associated with the incident
+	 * @return ArrayList<String>
+	 * 			the array of strings containing notes 
+	 * 			associated with the current incident
+	 */
 	public ArrayList<String> getNotes() {
 		return notes;
 	}
-	
+	/**
+	 * retrieves the work notes associated with the incident
+	 * @return String
+	 * 		the notes associated with an incident
+	 */
 	public String getNotesString() {
 		return null;
 	}
-	
+	/**
+	 * updates the incident
+	 * @param command
+	 * 		the command that updates the incident
+	 */
 	public void update(Command command) {
 		//make this
 	}
-	
+	/**
+	 * returns the current incident 
+	 * @return Incident
+	 * 		the current XML incident
+	 */
 	public Incident getXMLIncident() {
 		return null;
 	}
-	
+	/**
+	 * allows the user to set the counter
+	 * 
+	 * @param count
+	 * 		the number of incidents
+	 */
 	public static void setCounter(int count) {
 		counter = count;
 	}
@@ -222,13 +362,22 @@ public class ManagedIncident {
 	 *
 	 */
 	public class NewState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
@@ -242,13 +391,22 @@ public class ManagedIncident {
 	 *
 	 */
 	public class InProgressState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
@@ -264,13 +422,22 @@ public class ManagedIncident {
 	 *
 	 */
 	public class OnHoldState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
@@ -285,13 +452,22 @@ public class ManagedIncident {
 	 *
 	 */
 	public class ResolvedState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
@@ -306,13 +482,22 @@ public class ManagedIncident {
 	 *
 	 */
 	public class CancelledState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
@@ -326,16 +511,27 @@ public class ManagedIncident {
 	 *
 	 */
 	public class ClosedState implements IncidentState {
-
+		/**
+		 * updates the state 
+		 * 
+		 * @param command
+		 * 		the command that changes the state
+		 */
 		@Override
 		public void updateState(Command command) {
 			// TODO Auto-generated method stub
 		
 		}
-
+		/**
+		 * returns the state's name
+		 * @return String
+		 * 		the state's name
+		 */
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
+			// using an enumeration 
+			// Category c = Category.INQUIRY;
 			return null;
 		}
 	}
@@ -344,6 +540,8 @@ public class ManagedIncident {
 	//Category
 	/** enumeration for setting the category **/
 	public enum Category { INQUIRY, SOFTWARE, HARDWARE, NETWORK, DATABASE }
+	
+	
 	
 	//Priority
 	/** enumeration for setting the Priority **/
