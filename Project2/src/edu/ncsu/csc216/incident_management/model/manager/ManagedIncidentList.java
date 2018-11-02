@@ -84,7 +84,7 @@ public class ManagedIncidentList {
 	 * @param c
 	 * 			the command to be executed
 	 */
-	public void executeCommant (int i, Command c) {
+	public void executeCommand (int i, Command c) {
 		//to-do
 	}
 	/**
