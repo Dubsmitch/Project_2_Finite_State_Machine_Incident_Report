@@ -94,10 +94,6 @@ public class ManagedIncident {
 	/** instance of state **/
 	private final IncidentState state = newState;
 	
-	// instances of other classes
-	/** instance of Managed Incident list **/
-	private ManagedIncidentList incidents;
-	
 	
 	/**
 	 * Constructs a managed incident
