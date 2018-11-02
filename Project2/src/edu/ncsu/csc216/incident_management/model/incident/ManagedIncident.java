@@ -63,7 +63,7 @@ public class ManagedIncident {
 	/** final for the Closed name **/
 	public static final String CLOSED_NAME = "Closed";
 	/** final for the Cancelled Name **/
-	public static final String CANCELLED_NAME = "Cancelled";
+	public static final String CANCELED_NAME = "Cancelled";
 	
 	/** field for counter **/
 	private static int counter = 0;

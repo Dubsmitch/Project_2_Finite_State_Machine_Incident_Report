@@ -53,7 +53,7 @@ public class IncidentManager {
 	 * @param fileName
 	 * 			the name of the file to load from
 	 */
-	public void loadManagedIncidentsToFile(String fileName) {
+	public void loadManagedIncidentsFromFile(String fileName) {
 		//To-Do
 	}
 	/**
