@@ -15,7 +15,10 @@ import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priori
  */
 public class IncidentManager {
 	/** creates and manages a list of managed incidents **/
-	private ArrayList<ManagedIncident> incidents;
+	private ManagedIncidentList incidentlist;
+	
+	/** the singleton instance **/
+	private IncidentManager singleton;
 	
 	/**
 	 * creates a singleton of IncidentManager
