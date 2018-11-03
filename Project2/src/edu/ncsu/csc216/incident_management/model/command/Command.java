@@ -67,6 +67,29 @@ public class Command {
 	public Command (CommandValue c, String ownerId,
 			OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
 			CancellationCode cancellationCode, String note) {
+	if (c == null) {
+		throw new IllegalArgumentException ("A command must have a command value");
+	}
+	
+	if (c == CommandValue.INVESTIGATE && (ownerId == null || ownerId.equals(""))) {
+		throw new IllegalArgumentException ("A command of investigate"
+				+ " must have an owner Id");
+	}
+	
+	if (c == CommandValue.HOLD && onHoldReason == null) {
+		throw new IllegalArgumentException ("if an incident is on hold"
+				+ " there must be a reason assigned to it");
+	}
+	
+	if (c == CommandValue.RESOLVE && resolutionCode == null) {
+		throw new IllegalArgumentException ("If incident is going to be resolved"
+				+ " it must also have a resolution code");
+	}
+	
+	if (c == CommandValue.CANCEL && cancellationCode == null) {
+		throw new IllegalArgumentException ("If incident is going to be canceled"
+				+ " it must have a cancellation code");
+	}
 	
 	this.c = c;
 	this.onHoldReason = onHoldReason;
