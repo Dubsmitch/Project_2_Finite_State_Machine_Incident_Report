@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Incidents>
+	<Incident>
+		<id>3</id>
+		<caller>student1</caller>
+		<category>Hardware</category>
+		<state>On Hold</state>
+		<priority>High</priority>
+		<owner>tgpucket</owner>
+		<name>Mount data drive to VM</name>
+		<onhold_reason>Awaiting change</onhold_reason>
+		<work_notes>
+			<note>Increase the hard drive capacity to 500 GB for Jenkins servers.
+			</note>
+			<note>Hard drive resources are under investigation.</note>
+		</work_notes>
+	</Incident>
+</Incidents>

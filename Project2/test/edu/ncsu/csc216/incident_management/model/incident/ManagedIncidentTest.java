@@ -60,10 +60,13 @@ public class ManagedIncidentTest {
 			fail("Cannot instantiate object without a caller");
 		} catch (IllegalArgumentException e) {
 		}
-		
-		
 	}
 	
-	
+	/**
+	 * testing second constructor somehow B-|
+	 */
+	@Test
+	public void testManagedIncidentTwo() {
+		
 
 }

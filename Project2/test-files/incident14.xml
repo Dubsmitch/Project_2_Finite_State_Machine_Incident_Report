@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Incidents>
+	<Incident>
+		<id>1</id>
+		<caller>sesmith5</caller>
+		<category>Software</category>
+		<state>New</state>
+		<priority>Urgentish</priority>
+		<name>Jenkins installation</name>
+		<work_notes>
+			<note>Install latest Jenkins system on 216 VMs</note>
+		</work_notes>
+	</Incident>
+</Incidents>

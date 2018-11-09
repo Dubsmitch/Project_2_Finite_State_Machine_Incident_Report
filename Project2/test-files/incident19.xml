@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Incidents>
+	<Incident>
+		<id>4</id>
+		<caller>jep</caller>
+		<category>Software</category>
+		<state>Resolved</state>
+		<priority>Medium</priority>
+		<owner>wheckma</owner>
+		<name>Permissions issue with reading files</name>
+		<resolution_code>Incorrect</resolution_code>
+		<work_notes>
+			<note>Can't read file in the /usr/local directory when running
+				grading system</note>
+			<note>Permissions in /usr/local are under investigation</note>
+			<note>Workaround - have to run script every night to change
+				permissions</note>
+		</work_notes>
+	</Incident>
+</Incidents>

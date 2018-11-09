@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Incidents>
+	<Incident>
+		<id>6</id>
+		<caller>student3</caller>
+		<category>Inquiry</category>
+		<state>Canceled</state>
+		<priority>Low</priority>
+		<name>What's the best pizza place near Centenntial Campus?</name>
+		<cancellation_code>Canceled</cancellation_code>
+		<work_notes>
+			<note>See subject</note>
+		</work_notes>
+	</Incident>
+</Incidents>
