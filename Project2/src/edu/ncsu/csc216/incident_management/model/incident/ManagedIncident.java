@@ -3,12 +3,13 @@ package edu.ncsu.csc216.incident_management.model.incident;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.incident.xml.Incident;
+import edu.ncsu.csc216.incident.xml.WorkNotes;
 import edu.ncsu.csc216.incident_management.model.command.Command;
 import edu.ncsu.csc216.incident_management.model.command.Command.CancellationCode;
+import edu.ncsu.csc216.incident_management.model.command.Command.CommandValue;
 import edu.ncsu.csc216.incident_management.model.command.Command.OnHoldReason;
 import edu.ncsu.csc216.incident_management.model.command.Command.ResolutionCode;
-import edu.ncsu.csc216.incident_management.model.manager.ManagedIncidentList;
-//javadoc this//
+
 
 /**
  * creates the class that allows for the creation of an incident
@@ -62,13 +63,15 @@ public class ManagedIncident {
 	public static final String RESOLVED_NAME = "Resolved";
 	/** final for the Closed name **/
 	public static final String CLOSED_NAME = "Closed";
-	/** final for the Cancelled Name **/
-	public static final String CANCELED_NAME = "Cancelled";
+	/** final for the Canceled Name **/
+	public static final String CANCELED_NAME = "Canceled";
 	
 	/** field for counter **/
 	private static int counter = 0;
 	
 	//instances of enums//
+	/** enum for category **/
+	private Category category;
 	/** enum for priority **/
 	private Priority priority;
 	/** enum for cancellation code **/
@@ -76,7 +79,7 @@ public class ManagedIncident {
 	/** instance of enum class resolution code **/
 	private ResolutionCode resolutionCode;
 	/** instance of onHoldReason enum class **/
-	private OnHoldReason onHoldreason;
+	private OnHoldReason onHoldReason;
 	
 	//instances of states//
 	/** instance of new state **/
@@ -89,10 +92,10 @@ public class ManagedIncident {
 	private final IncidentState resolvedState = new ResolvedState();
 	/** final instance of the closed State **/
 	private final IncidentState closedState = new ClosedState();
-	/** final instance of the cancelled state **/
-	private final IncidentState cancelledState = new CancelledState();
+	/** final instance of the canceled state **/
+	private final IncidentState canceledState = new CanceledState();
 	/** instance of state **/
-	private final IncidentState state = newState;
+	private IncidentState state = newState;
 	
 	
 	/**
@@ -110,7 +113,41 @@ public class ManagedIncident {
 	 * 		the work note associated with the incident
 	 */
 	public ManagedIncident (String caller, Category category, Priority priority, String name, String workNote) {
-		//make me
+		if (caller == "" || caller == null || category == null || priority == null || name == "" || name == null
+				|| workNote == "" || workNote == null) {
+			throw new IllegalArgumentException ("no fields can be null or empty");
+		}
+		
+		//incidentId, caller, category, state, priority, owner, name, onHoldReason, 
+		//changeRequest, resolutionCode, cancellationCode, and all of its notes
+		if (caller.length() < 1) {
+			throw new IllegalArgumentException ("Caller must have more than 1 letter");
+		}
+		//if (category != Category.DATABASE || category != Category.HARDWARE || category != Category.INQUIRY
+		//		|| category != Category.NETWORK || category != Category.SOFTWARE) {
+		//	throw new IllegalArgumentException ("category must be set");
+		//}
+		
+		this.caller = caller;
+		this.category = category;
+		this.priority = priority;
+		this.name = name;
+		this.owner = null;
+		
+		ArrayList<String> note = new ArrayList<String>(1);
+		note.add(workNote);
+		this.notes = note;
+		
+		this.changeRequest = null;
+		this.state = newState;
+		this.changeRequest = null;
+		this.setCancellationCode(null);
+		this.setResolutionCode(null);
+		this.onHoldReason = null;
+		this.incident = counter;
+		incrementCounter();
+		
+		
 	}
 	/**
 	 * creates an incident
@@ -118,8 +155,25 @@ public class ManagedIncident {
 	 * 		the new incident
 	 */
 	public ManagedIncident(Incident incident) {
-		//makes an incident
+		//incidentId, caller, category, state, priority, owner, name, onHoldReason, 
+		//changeRequest, resolutionCode, cancellationCode, and all of its notes
+		
+
+		this.caller = incident.getCaller();
+		this.setState(incident.getState());
+		this.setPriority(incident.getPriority());
+		this.name = incident.getName();
+		this.notes =  (ArrayList<String>) incident.getWorkNotes().getNotes();
+		this.setCategory(incident.getCategory());
+		this.owner = incident.getOwner();
+		this.changeRequest = incident.getChangeRequest();
+		this.setOnHoldReason(incident.getOnHoldReason());
+		this.setResolutionCode(incident.getResolutionCode());
+		this.setCancellationCode(incident.getCancellationCode());
+		this.incident = incident.getId();
 	}
+	
+	
 	/**
 	 * increments the counter (keep track of incident)
 	 */
@@ -132,7 +186,7 @@ public class ManagedIncident {
 	 * 		the incident id
 	 */
 	public int getIncidentId() {
-		return 0;
+		return this.incident;
 	}
 	/**
 	 * returns the change request
@@ -140,7 +194,7 @@ public class ManagedIncident {
 	 * 		the change request
 	 */
 	public String getChangeRequest() {
-		return null;
+		return this.changeRequest;
 	}
 	/**
 	 * returns the category of the current
@@ -150,7 +204,7 @@ public class ManagedIncident {
 	 * 		the category of the incident
 	 */
 	public Category getCategory() {
-		return null;
+		return this.category;
 	}
 	/**
 	 * returns the category of the current Incident
@@ -159,16 +213,50 @@ public class ManagedIncident {
 	 * 		the category of the incident in string form
 	 */
 	public String getCategoryString() {
-		return null;
+				
+		if (this.category == Category.INQUIRY) {
+			return C_INQUIRY;
+		} else if (this.category == Category.SOFTWARE) {
+			return C_SOFTWARE;
+		} else if (this.category == Category.HARDWARE) {
+			return C_HARDWARE;
+		} else if (this.category == Category.NETWORK) {
+			return C_NETWORK;
+		} else if (this.category == Category.DATABASE) {
+			return C_DATABASE;
+		} else {
+			throw new IllegalArgumentException ("Incident must have a category");
+		}
 	}
-	
 	/**
 	 * sets the category
 	 * @param String
 	 * 		the category to set the incident too
 	 */
 	private void setCategory(String string) {
-		//create this
+	//Category
+			// enumeration for setting the category **/
+			//public enum Category { INQUIRY, SOFTWARE, HARDWARE, NETWORK, DATABASE }
+			
+			//if category is inquiry
+			if (string == C_INQUIRY) {
+				this.category = Category.INQUIRY;
+			//if category is software
+			} else if (string == C_SOFTWARE) {
+				this.category = Category.SOFTWARE;
+			//if category is hardware
+			} else if (string == C_HARDWARE) {
+				this.category = Category.HARDWARE;
+			//if category is network
+			} else if (string == C_NETWORK) {
+				this.category = Category.NETWORK;
+			//if category is database
+			} else if (string == C_DATABASE) {
+				this.category = Category.DATABASE;
+			} else {
+				throw new IllegalArgumentException ("incident must have a category");
+			}
+		
 	}
 	
 	/**
@@ -177,8 +265,20 @@ public class ManagedIncident {
 	 * 		the priority of the incident
 	 */
 	public String getPriorityString() {
-		return null;
+		
+		if (this.priority == Priority.URGENT) {
+			return P_URGENT;
+		} else if (this.priority == Priority.HIGH) {
+			return P_HIGH;
+		} else if (this.priority == Priority.MEDIUM) {
+			return P_MEDIUM;
+		} else if (this.priority == Priority.LOW) {
+			return P_LOW;
+		} else {
+			return null;
+		}
 	}
+
 	
 	/**
 	 * sets the priority of an incident
@@ -186,8 +286,30 @@ public class ManagedIncident {
 	 * 		the string to set the priority of the incident to   
 	 */
 	private void setPriority(String string) {
-		// create this
+
+		
+		//if priority is urgent
+		if (string == P_URGENT) {
+			
+			this.priority =  Priority.URGENT;
+		//if priority is High
+		} else if (string == P_HIGH) {
+				
+			this.priority = Priority.HIGH;
+		//if priority is Medium
+		} else if (string == P_MEDIUM) {
+								
+			this.priority =  Priority.MEDIUM;
+		//if priority is Medium
+		} else if (string == P_LOW) {
+									
+			this.priority =  Priority.LOW;
+		} else {
+			throw new IllegalArgumentException ("can't convert into a priority");
+		}
+		
 	}
+
 	/**
 	 * returns the on hold reason associated with
 	 * the current incident
@@ -197,14 +319,49 @@ public class ManagedIncident {
 	 * 		the incident
 	 */
 	public String getOnHoldReasonString() {
-		return null;
+		//public enum OnHoldReason { AWAITING_CALLER, AWAITING_CHANGE, AWAITING_VENDOR }
+//		/** information about on hold caller code **/
+//		public static final String OH_CALLER = "Awaiting Caller";
+//		/** information about on hold change **/
+//		public static final String OH_CHANGE = "Awaiting Change";
+//		/** information about on hold vendor **/
+//		public static final String OH_VENDOR = "Awaiting Vendor";
+//		/** information regarding resolution of incident **/
+		
+//		if (onHoldReasonString == Command.OH_CALLER) {
+//			return OnHoldReason.AWAITING_CALLER;
+//		} else if (onHoldReasonString == Command.OH_CHANGE) {
+//			return OnHoldReason.AWAITING_CHANGE;
+//		} else if (onHoldReasonString == Command.OH_VENDOR) {
+//			return OnHoldReason.AWAITING_VENDOR;
+//		} else {
+//			return null;
+//		}
+		
+		if (this.onHoldReason == Command.OnHoldReason.AWAITING_CALLER) {
+			return Command.OH_CALLER;
+		} else if (this.onHoldReason == Command.OnHoldReason.AWAITING_CHANGE) {
+			return Command.OH_CHANGE;
+		} else if (this.onHoldReason == Command.OnHoldReason.AWAITING_VENDOR) {
+			return Command.OH_VENDOR;
+
+		} else {
+			return null;
+		}
 	}
+	//maybe go change the other private methods
 	/**
 	 * Sets the on hold reason for the current Incident
 	 * @param string
 	 */
 	private void setOnHoldReason(String string) {
-		//create this
+		if (string == Command.OH_CALLER) {
+			this.onHoldReason = OnHoldReason.AWAITING_CALLER;
+		} else if (string == Command.OH_CHANGE) {
+			this.onHoldReason = OnHoldReason.AWAITING_CHANGE;
+		} else if (string == Command.OH_VENDOR) {
+			this.onHoldReason = OnHoldReason.AWAITING_VENDOR;
+		}
 	}
 	/**
 	 * returns the cancellation code associated with the current Incident
@@ -214,7 +371,23 @@ public class ManagedIncident {
 	 * 		code associated with the Incident
 	 */
 	public String getCancellationCodeString() {
-		return null;
+		//public enum CancellationCode { DUPLICATE, UNNECESSARY, NOT_AN_INCIDENT }
+//		/** information regarding resolution **/
+//		public static final String CC_DUPLICATE = "Duplicate";
+//		/** information about cancellation **/
+//		public static final String CC_UNNECESSARY = "Unnecessary";
+//		/** information about cancellation **/
+//		public static final String CC_NOT_AN_INCIDENT = "Not and incident";
+		
+		if (this.cancellationCode == CancellationCode.DUPLICATE) {
+			return Command.CC_DUPLICATE;
+		} else if (this.cancellationCode == CancellationCode.UNNECESSARY) {
+			return Command.CC_UNNECESSARY;
+		} else if (this.cancellationCode == CancellationCode.NOT_AN_INCIDENT) {
+			return Command.CC_NOT_AN_INCIDENT;
+		} else {
+			return null;
+		}
 	}
 	/**
 	 * sets the cancellation code to be associated with the current Incident
@@ -223,7 +396,23 @@ public class ManagedIncident {
 	 * 		the cancellation code to be associated with the Incident
 	 */
 	private void setCancellationCode(String string) {
-		//create this
+		//public enum CancellationCode { DUPLICATE, UNNECESSARY, NOT_AN_INCIDENT }
+//		/** information regarding resolution **/
+//		public static final String CC_DUPLICATE = "Duplicate";
+//		/** information about cancellation **/
+//		public static final String CC_UNNECESSARY = "Unnecessary";
+//		/** information about cancellation **/
+//		public static final String CC_NOT_AN_INCIDENT = "Not and incident";
+		
+		if (string == Command.CC_DUPLICATE) {
+			this.cancellationCode = CancellationCode.DUPLICATE;
+		} else if (string == Command.CC_UNNECESSARY) {
+			this.cancellationCode = CancellationCode.UNNECESSARY;
+		} else if (string == Command.CC_NOT_AN_INCIDENT) {
+			this.cancellationCode = CancellationCode.NOT_AN_INCIDENT;
+		} else {
+			this.cancellationCode = null;
+		}
 	}
 	/**
 	 * returns the incident state associated with the current Incident
@@ -232,7 +421,7 @@ public class ManagedIncident {
 	 * 		the incident state associated with the Incident
 	 */
 	public IncidentState getState() {
-		return null;
+		return this.state;
 	}
 	/**
 	 * sets the State of the current Incident
@@ -241,7 +430,21 @@ public class ManagedIncident {
 	 * 		the state to set the current state to
 	 */
 	private void setState (String string) {
-		//create this
+		if (string == NEW_NAME ) {
+			this.state = newState;
+		} else if (string == IN_PROGRESS_NAME) {
+			this.state = inProgressState;
+		} else if (string == ON_HOLD_NAME) {
+			this.state = onHoldState;
+		} else if (string == RESOLVED_NAME) {
+			this.state = resolvedState;
+		} else if (string == CLOSED_NAME) {
+			this.state = closedState;
+		} else if (string == CANCELED_NAME) {
+			this.state = canceledState;
+		} else {
+			throw new IllegalArgumentException ("must have a state");
+		}
 	}
 
 	/**
@@ -251,7 +454,7 @@ public class ManagedIncident {
 	 * 		the resolution code associated with the Incident
 	 */
 	public ResolutionCode getResolutionCode() {
-		return null;
+		return this.resolutionCode;
 	}
 	/**
 	 * returns the resolution code associated with the current Incident
@@ -260,7 +463,26 @@ public class ManagedIncident {
 	 * 		the resolution code associated with the Incident
 	 */
 	public String getResolutionCodeString () {
-		return null;
+		//public enum ResolutionCode { PERMANENTLY_SOLVED, WORKAROUND, NOT_SOLVED, CALLER_CLOSED }
+//		public static final String RC_PERMANENTLY_SOLVED = "Permanently Solved";
+//		/** information regarding resolution **/
+//		public static final String RC_WORKAROUND = "Workaround";
+//		/** information regarding resolution **/
+//		public static final String RC_NOT_SOLVED = "Not Solved";
+//		/** information regarding resolution **/
+//		public static final String RC_CALLER_CLOSED = "Caller Closed";
+
+		if (resolutionCode == ResolutionCode.PERMANENTLY_SOLVED) {
+			return Command.RC_PERMANENTLY_SOLVED;
+		} else if (resolutionCode == ResolutionCode.WORKAROUND) {
+			return Command.RC_WORKAROUND;
+		} else if (resolutionCode == ResolutionCode.NOT_SOLVED) {
+			return Command.RC_NOT_SOLVED;
+		} else if (resolutionCode == ResolutionCode.CALLER_CLOSED) {
+			return Command.RC_CALLER_CLOSED;
+		} else {
+			return null;
+		}
 	}
 	/**
 	 * sets the resolution code of the current Incident
@@ -269,7 +491,26 @@ public class ManagedIncident {
 	 * 		the resolution code to be associated with the Incident
 	 */
 	private void setResolutionCode(String string) {
-		//create this
+		//public enum ResolutionCode { PERMANENTLY_SOLVED, WORKAROUND, NOT_SOLVED, CALLER_CLOSED }
+//		public static final String RC_PERMANENTLY_SOLVED = "Permanently Solved";
+//		/** information regarding resolution **/
+//		public static final String RC_WORKAROUND = "Workaround";
+//		/** information regarding resolution **/
+//		public static final String RC_NOT_SOLVED = "Not Solved";
+//		/** information regarding resolution **/
+//		public static final String RC_CALLER_CLOSED = "Caller Closed";
+
+		if (string == Command.RC_PERMANENTLY_SOLVED) {
+			this.resolutionCode =  ResolutionCode.PERMANENTLY_SOLVED;
+		} else if (string == Command.RC_CALLER_CLOSED) {
+			this.resolutionCode =  ResolutionCode.CALLER_CLOSED;
+		} else if (string == Command.RC_WORKAROUND) {
+			this.resolutionCode =  ResolutionCode.WORKAROUND;
+		} else if (string == Command.RC_NOT_SOLVED) {
+			this.resolutionCode =  ResolutionCode.NOT_SOLVED;
+		} else {
+			this.resolutionCode = null;
+		}
 	}
 	/**
 	 * returns the Owner associated with the current Incident
@@ -314,7 +555,13 @@ public class ManagedIncident {
 	 * 		the notes associated with an incident
 	 */
 	public String getNotesString() {
-		return null;
+		int lengthOfNotes = this.notes.size();
+		String stringOfNotes = "";
+		
+		for (int i = 0; i < lengthOfNotes; i++) {
+			stringOfNotes = this.notes.get(i) + "\n--\n";
+		}
+		return stringOfNotes;
 	}
 	/**
 	 * updates the incident
@@ -325,13 +572,43 @@ public class ManagedIncident {
 		//make this
 	}
 	/**
-	 * returns the current incident 
+	 * returns the current incident for saving
 	 * @return Incident
 	 * 		the current XML incident
 	 */
 	public Incident getXMLIncident() {
-		return null;
+//      <element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
+//      <element name="caller" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="category" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="priority" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="owner" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="onhold_reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="change_request" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="resolution_code" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="cancellation_code" type="{http://www.w3.org/2001/XMLSchema}string"/>
+//      <element name="work_notes" type="{}WorkNotes"/>
+        
+        WorkNotes workNotes = new WorkNotes();
+        workNotes.getNotes().addAll(notes);
+        
+		Incident a = new Incident();
+		a.setCaller(this.getCaller());
+		a.setId(this.getIncidentId());
+		a.setCategory(this.getCategoryString());
+		a.setState(this.state.getStateName());
+		a.setPriority(this.getPriorityString());
+		a.setOwner(this.getOwner());
+		a.setName(this.getName());
+		a.setOnHoldReason(this.getOnHoldReasonString());
+		a.setChangeRequest(this.getChangeRequest());
+		a.setResolutionCode(this.getResolutionCodeString());
+		a.setCancellationCode(this.getResolutionCodeString());
+		a.setWorkNotes(workNotes);
+		return a;
 	}
+	
 	/**
 	 * allows the user to set the counter
 	 * 
@@ -339,6 +616,9 @@ public class ManagedIncident {
 	 * 		the number of incidents
 	 */
 	public static void setCounter(int count) {
+		if (count < 0) {
+			throw new IllegalArgumentException ("incident id must be greater than or equal to 0");
+		}
 		counter = count;
 	}
 	//contains the innerClasses:
@@ -366,8 +646,11 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-		
+			if (command.getCommand() == CommandValue.CANCEL) {
+				state = canceledState;
+			} else if (command.getCommand() == CommandValue.INVESTIGATE) {
+				
+			}
 		}
 		/**
 		 * returns the state's name
@@ -376,8 +659,8 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+		
+			return NEW_NAME;
 		}
 	}
 	/**
@@ -395,6 +678,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
+		
 			// TODO Auto-generated method stub
 		
 		}
@@ -405,8 +689,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return NEW_NAME;
 		}
 	}
 	
@@ -436,8 +719,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return ON_HOLD_NAME;
 		}
 	}
 	/**
@@ -466,8 +748,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return RESOLVED_NAME;
 		}
 	}
 	/**
@@ -477,7 +758,7 @@ public class ManagedIncident {
 	 * @author William
 	 *
 	 */
-	public class CancelledState implements IncidentState {
+	public class CanceledState implements IncidentState {
 		/**
 		 * updates the state 
 		 * 
@@ -496,8 +777,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return CANCELED_NAME;
 		}
 	}
 	/**
@@ -528,7 +808,7 @@ public class ManagedIncident {
 			// TODO Auto-generated method stub
 			// using an enumeration 
 			// Category c = Category.INQUIRY;
-			return null;
+			return CLOSED_NAME;
 		}
 	}
 		//enums:
