@@ -2,8 +2,14 @@ package edu.ncsu.csc216.incident_management.model.incident;
 
 import static org.junit.Assert.*;
 
+import java.io.Reader;
+
 import org.junit.Test;
 
+import edu.ncsu.csc216.incident.io.IncidentIOException;
+import edu.ncsu.csc216.incident.io.IncidentReader;
+import edu.ncsu.csc216.incident.xml.Incident;
+import edu.ncsu.csc216.incident.xml.WorkNotes;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.NewState;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
@@ -67,6 +73,46 @@ public class ManagedIncidentTest {
 	 */
 	@Test
 	public void testManagedIncidentTwo() {
+        WorkNotes workNotes = new WorkNotes();
+		Incident a = new Incident();
+		a.setCaller("William");
+		a.setCategory(ManagedIncident.C_NETWORK);
+		a.setPriority(ManagedIncident.P_LOW);
+		a.setName("Things");
+		a.setWorkNotes(workNotes);
+		a.setState(ManagedIncident.IN_PROGRESS_NAME);
 		
-
+		ManagedIncident b = new ManagedIncident(a);
+		
+		assertEquals(b.getCaller(), "William");
+		assertEquals(b.getIncidentId(), 0);
+		
+		a.setId(1);
+		ManagedIncident c = new ManagedIncident(a);
+		assertEquals(c.getIncidentId(), 1);
+	}
+	
+	/**
+	 * testing get XMLIncident
+	 */
+	@Test
+	public void testGetXMLIncident() {
+        WorkNotes workNotes = new WorkNotes();
+		Incident a = new Incident();
+		a.setCaller("William");
+		a.setCategory(ManagedIncident.C_NETWORK);
+		a.setPriority(ManagedIncident.P_LOW);
+		a.setName("Things");
+		a.setWorkNotes(workNotes);
+		a.setState(ManagedIncident.IN_PROGRESS_NAME);
+		
+		ManagedIncident b = new ManagedIncident(a);
+		
+		assertEquals(b.getCaller(), "William");
+		assertEquals(b.getIncidentId(), 0);
+		assertEquals(b.getChangeRequest(), null);
+		
+		//test to see if the caller name is the same
+		assertEquals(b.getXMLIncident().getCaller(), "William");
+	}
 }
