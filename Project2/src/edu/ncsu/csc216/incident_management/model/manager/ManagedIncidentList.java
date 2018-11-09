@@ -19,7 +19,10 @@ public class ManagedIncidentList {
 	 * the constructor for the managed incident list
 	 */
 	public ManagedIncidentList() {
-		//To-Do
+		incidents = new ArrayList<ManagedIncident>(1);
+		
+		ManagedIncident.setCounter(0);
+		
 	}
 	/**
 	 * adds incidents to the list
@@ -28,7 +31,16 @@ public class ManagedIncidentList {
 	 * 			the list of incidents to be added
 	 */
 	public void addXMLIncidents(List<Incident> incidentList) {
-		//to-do
+		int sizeOfNewList = incidentList.size();
+		int maxi = 0;
+		for (int i = 0; i < sizeOfNewList; i++) {
+			ManagedIncident q = new ManagedIncident(incidentList.get(i));
+			incidents.add(q);
+			if (q.getIncidentId() > maxi) {
+				maxi = q.getIncidentId();
+			}
+		}
+		ManagedIncident.setCounter(maxi + 1);
 	}
 	/**
 	 * adds an incident to the list
@@ -47,7 +59,9 @@ public class ManagedIncidentList {
 	 */
 	public int addIncident(String caller, Category category, Priority
 								priority, String name, String workNote) {
-		return 0;
+		ManagedIncident a = new ManagedIncident (caller, category, priority, name, workNote);
+		incidents.add(a);		
+		return a.getIncidentId();
 	}
 	/**
 	 * returns the list of all managed incidents
@@ -55,7 +69,8 @@ public class ManagedIncidentList {
 	 * 			the list of all managed incidents
 	 */
 	public List<ManagedIncident> getManagedIncidents(){
-		return null;
+
+		return (List<ManagedIncident>) incidents;
 	}
 	/**
 	 * filters incidents by category
@@ -65,7 +80,14 @@ public class ManagedIncidentList {
 	 * 			the filtered list of managed incidents
 	 */
 	public List<ManagedIncident> getIncidentsByCategory(Category category){
-		return null;
+		ArrayList<ManagedIncident> thingList = new ArrayList<ManagedIncident>(incidents.size());
+		for (int i = 0; i < incidents.size(); i++) {
+			if (incidents.get(i).getCategory() == category) {
+				thingList.add(incidents.get(i));
+			}
+		}
+		
+		return (List<ManagedIncident>) thingList;
 	}
 	/**
 	 * gets an incident by the id number
@@ -75,6 +97,12 @@ public class ManagedIncidentList {
 	 * 			the managed incident
 	 */
 	public ManagedIncident getIncidentById(int id) {
+		
+		for (int i = 0; i < incidents.size(); i++) {
+			if (incidents.get(i).getIncidentId() == id) {
+				return incidents.get(i);
+			}
+		}
 		return null;
 	}
 	/**
@@ -84,8 +112,12 @@ public class ManagedIncidentList {
 	 * @param c
 	 * 			the command to be executed
 	 */
-	public void executeCommand (int i, Command c) {
-		//to-do
+	public void executeCommand (int id, Command c) {
+		for (int i = 0; i < incidents.size(); i++) {
+			if (incidents.get(i).getIncidentId() == id) {
+				incidents.get(i).update(c);
+			}
+		}
 	}
 	/**
 	 * deletes an incident from the list by the id
@@ -93,7 +125,11 @@ public class ManagedIncidentList {
 	 * 			the id of the incident to delete
 	 */
 	public void deleteIncidentById(int id) {
-		//to-do
+		for (int i = 0; i < incidents.size(); i++) {
+			if (incidents.get(i).getIncidentId() == id) {
+				incidents.remove(i);
+			}
+		}
 	}
 	
 }

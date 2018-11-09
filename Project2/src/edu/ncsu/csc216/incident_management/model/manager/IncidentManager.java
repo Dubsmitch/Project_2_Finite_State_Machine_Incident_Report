@@ -1,7 +1,11 @@
 package edu.ncsu.csc216.incident_management.model.manager;
 
+import java.io.Reader;
 import java.util.ArrayList;
 
+import edu.ncsu.csc216.incident.io.IncidentIOException;
+import edu.ncsu.csc216.incident.io.IncidentReader;
+import edu.ncsu.csc216.incident.io.IncidentWriter;
 import edu.ncsu.csc216.incident_management.model.command.Command;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
@@ -15,10 +19,10 @@ import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priori
  */
 public class IncidentManager {
 	/** creates and manages a list of managed incidents **/
-	private ManagedIncidentList incidentlist;
+	private ManagedIncidentList incidentList;
 	
 	/** the singleton instance **/
-	private IncidentManager singleton;
+	private static IncidentManager singleton;
 	
 	/**
 	 * creates a singleton of IncidentManager
@@ -37,7 +41,10 @@ public class IncidentManager {
 	 * one is created
 	 */
 	public static IncidentManager getInstance() {
-		return null;
+		if (singleton == null) {
+			singleton = new IncidentManager();
+		}
+		return singleton;
 	}
 	
 	/**
@@ -46,15 +53,26 @@ public class IncidentManager {
 	 * 			the name of the file
 	 */
 	public void saveManagedIncidentsToFile(String fileName) {
-		//To-Do
+		IncidentWriter writer = new IncidentWriter(fileName);
+		for (int i = 0; i < incidentList.getManagedIncidents().size(); i++) {
+			writer.addItem(incidentList.getManagedIncidents().get(i).getXMLIncident());
+		}
 	}
+	
 	/**
 	 * loads list from a file
 	 * @param fileName
 	 * 			the name of the file to load from
 	 */
 	public void loadManagedIncidentsFromFile(String fileName) {
-		//To-Do
+		try {
+			IncidentReader reader = new IncidentReader(fileName);
+			//reader.
+		} catch (IncidentIOException e) {
+			throw new IllegalArgumentException ("Cannot read from file");
+		}
+		
+		
 	}
 	/**
 	 * creates a new managed incident list
