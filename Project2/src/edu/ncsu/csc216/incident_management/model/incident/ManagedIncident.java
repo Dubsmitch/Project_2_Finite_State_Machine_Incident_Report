@@ -562,7 +562,7 @@ public class ManagedIncident {
 		String stringOfNotes = "";
 		
 		for (int i = 0; i < lengthOfNotes; i++) {
-			stringOfNotes = stringOfNotes + this.notes.get(i) + "\n--\n";
+			stringOfNotes = stringOfNotes + this.notes.get(i) + "\n-------\n";
 		}
 		return stringOfNotes;
 	}
