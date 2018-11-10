@@ -8,7 +8,12 @@ import edu.ncsu.csc216.incident_management.model.command.Command.CancellationCod
 import edu.ncsu.csc216.incident_management.model.command.Command.CommandValue;
 import edu.ncsu.csc216.incident_management.model.command.Command.OnHoldReason;
 import edu.ncsu.csc216.incident_management.model.command.Command.ResolutionCode;
-
+/**
+ * test class for the command Class
+ * 
+ * @author William
+ *
+ */
 public class CommandTest {
 	/**
 	 * test command constructor
