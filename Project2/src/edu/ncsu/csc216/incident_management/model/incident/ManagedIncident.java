@@ -706,7 +706,9 @@ public class ManagedIncident {
 			//S1
 			} else if (command.getCommand() == CommandValue.HOLD) {
 				onHoldReason = command.getOnHoldReason();
-				
+				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+					changeRequest = command.getWorkNote();
+				}
 				notes.add(command.getWorkNote());
 				state = onHoldState;
 			//S2 (resolution)
