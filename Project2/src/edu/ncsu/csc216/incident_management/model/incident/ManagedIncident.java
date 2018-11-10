@@ -809,11 +809,11 @@ public class ManagedIncident {
 			//S3 user confirms
 			//state to closed, note saved,  
 			} else if (command.getCommand() == CommandValue.CONFIRM) {				
-				resolutionCode = null;
+				resolutionCode = command.getResolutionCode();
 				notes.add(command.getWorkNote());
 				state = closedState;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
-				resolutionCode = null;
+				resolutionCode = command.getResolutionCode();
 				cancellationCode = command.getCancellationCode();
 				notes.add(command.getWorkNote());
 				state = canceledState;
