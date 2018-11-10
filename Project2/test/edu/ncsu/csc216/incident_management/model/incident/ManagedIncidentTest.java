@@ -168,9 +168,9 @@ public class ManagedIncidentTest {
 		assertEquals(b.getXMLIncident().getCaller(), "William");
 		
 
-		Command commandToProgress = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
-		b.update(commandToProgress);
-		assertEquals(b.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
+		//Command commandToProgress = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
+		//b.update(commandToProgress);
+		//assertEquals(b.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
 		Command commandToResolve = new Command (CommandValue.RESOLVE, "William", null,  ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE, "note");
 		b.update(commandToResolve);
