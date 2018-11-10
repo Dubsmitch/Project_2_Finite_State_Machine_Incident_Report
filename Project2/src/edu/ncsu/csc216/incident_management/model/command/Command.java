@@ -67,6 +67,11 @@ public class Command {
 	public Command (CommandValue c, String ownerId,
 			OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
 			CancellationCode cancellationCode, String note) {
+	
+	if (note == null) {
+		throw new IllegalArgumentException("Cannot have a null note");
+	}
+	
 	if (c == null) {
 		throw new IllegalArgumentException ("A command must have a command value");
 	}
