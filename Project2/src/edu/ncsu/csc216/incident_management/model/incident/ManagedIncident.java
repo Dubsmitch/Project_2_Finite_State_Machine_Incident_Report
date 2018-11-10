@@ -846,8 +846,9 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-		
+			if(command.getCommand() == CommandValue.CONFIRM) {
+				throw new UnsupportedOperationException ("invaild command");
+			}
 		}
 		/**
 		 * returns the state's name
