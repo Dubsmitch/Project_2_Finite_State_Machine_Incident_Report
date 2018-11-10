@@ -835,7 +835,6 @@ public class ManagedIncident {
 			} else if (command.getCommand() == CommandValue.CONFIRM) {				
 				notes.add(command.getWorkNote());
 				state = closedState;
-				resolutionCode = null;
 				
 			} else if (command.getCommand() == CommandValue.CANCEL) {
 				cancellationCode = command.getCancellationCode();
