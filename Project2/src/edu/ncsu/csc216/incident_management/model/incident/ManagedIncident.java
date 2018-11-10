@@ -813,7 +813,6 @@ public class ManagedIncident {
 				notes.add(command.getWorkNote());
 				state = closedState;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
-				resolutionCode = command.getResolutionCode();
 				cancellationCode = command.getCancellationCode();
 				notes.add(command.getWorkNote());
 				state = canceledState;
