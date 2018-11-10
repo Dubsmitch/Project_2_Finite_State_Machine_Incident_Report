@@ -194,8 +194,12 @@ public class ManagedIncidentTest {
 		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
 		
 		Command newStateCommand1 = new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
-		b.update(newStateCommand1);
-		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
+		try {
+			b.update(newStateCommand1);
+			fail("invalid Transition");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
+		}
 				
 		Incident q = new Incident();
 		
@@ -306,6 +310,63 @@ public class ManagedIncidentTest {
 		Command newStateCommand212 = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
 		resolvedNow.update(newStateCommand212);
 		assertEquals(resolvedNow.getState().getStateName(), ManagedIncident.CANCELED_NAME);
+		
+		
+		Incident closeStateTest = new Incident();
+		
+		closeStateTest.setCaller("William");
+		closeStateTest.setCategory(ManagedIncident.C_NETWORK);
+		closeStateTest.setPriority(ManagedIncident.P_LOW);
+		closeStateTest.setName("Things");
+		closeStateTest.setWorkNotes(workNotes);
+		closeStateTest.setState(ManagedIncident.CANCELED_NAME);
+		
+		ManagedIncident closedStateTest = new ManagedIncident(closeStateTest);
+		
+		Command closeMe = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		try {
+			closedStateTest.update(closeMe);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
+		
+		Command closeMe1 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			closedStateTest.update(closeMe1);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
+		
+		Command closeMe2 = new Command (CommandValue.RESOLVE, "William", OnHoldReason.AWAITING_CALLER, ResolutionCode.NOT_SOLVED, CancellationCode.DUPLICATE, "note");
+
+		
+		try {
+			closedStateTest.update(closeMe2);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
+		
+		Command closeMe3 = new Command (CommandValue.REOPEN, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+
+		try {
+			closedStateTest.update(closeMe3);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
+		
+		Command closeMe4 = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			closedStateTest.update(closeMe4);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
 		
 	}
 }
