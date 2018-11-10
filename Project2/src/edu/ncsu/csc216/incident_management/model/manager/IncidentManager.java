@@ -92,6 +92,12 @@ public class IncidentManager {
 		
 		
 	}
+	/**
+	 * This method is for testing only, to return
+	 * the list that I need
+	 * @return ManagedIncidentList
+	 * 			the list of managedIncidents that is instantiated here
+	 */
 	//for testing only
 	protected ManagedIncidentList getList() {
 		return this.incidentList;
