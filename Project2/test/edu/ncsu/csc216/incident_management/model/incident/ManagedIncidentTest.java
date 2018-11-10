@@ -192,7 +192,7 @@ public class ManagedIncidentTest {
 		b.update(commandToCancel);
 		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
 		
-		Command newStateCommand1= new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
+		Command newStateCommand1 = new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
 		b.update(newStateCommand1);
 		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
 				
@@ -207,7 +207,7 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident qc = new ManagedIncident(q);
 		
-		Command newStateCommand2= new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
+		Command newStateCommand2 = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
 		qc.update(newStateCommand2);
 		assertEquals(qc.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 				
