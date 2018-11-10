@@ -2,16 +2,13 @@ package edu.ncsu.csc216.incident_management.model.incident;
 
 import static org.junit.Assert.*;
 
-import java.io.Reader;
 
 import org.junit.Test;
 
-import edu.ncsu.csc216.incident.io.IncidentIOException;
-import edu.ncsu.csc216.incident.io.IncidentReader;
+
 import edu.ncsu.csc216.incident.xml.Incident;
 import edu.ncsu.csc216.incident.xml.WorkNotes;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
-import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.NewState;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
 
 public class ManagedIncidentTest {
@@ -41,7 +38,10 @@ public class ManagedIncidentTest {
 			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
 			fail("Cannot instantiate object without a caller");
 		} catch (IllegalArgumentException e) {
+			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
+			
 		}
+		
 		
 		try {
 			ManagedIncident c = new ManagedIncident("William" , null, Priority.URGENT, "car stuff", "Calling cause stuff");
