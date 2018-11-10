@@ -8,6 +8,11 @@ import org.junit.Test;
 
 import edu.ncsu.csc216.incident.xml.Incident;
 import edu.ncsu.csc216.incident.xml.WorkNotes;
+import edu.ncsu.csc216.incident_management.model.command.Command;
+import edu.ncsu.csc216.incident_management.model.command.Command.CancellationCode;
+import edu.ncsu.csc216.incident_management.model.command.Command.CommandValue;
+import edu.ncsu.csc216.incident_management.model.command.Command.OnHoldReason;
+import edu.ncsu.csc216.incident_management.model.command.Command.ResolutionCode;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
 /**
@@ -150,5 +155,25 @@ public class ManagedIncidentTest {
 		
 		//test to see if the caller name is the same
 		assertEquals(b.getXMLIncident().getCaller(), "William");
+		
+
+		Command commandToProgress = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
+		b.update(commandToProgress);
+		assertEquals(b.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
+
+		
+		Command commandToOnHold = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		b.update(commandToOnHold);
+		assertEquals(b.getState().getStateName(), ManagedIncident.ON_HOLD_NAME);
+
+		
+		//CommandValue c, String ownerId,
+		//OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
+		//CancellationCode cancellationCode, String note)
+		Command commandToCancel = new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
+		
+		b.update(commandToCancel);
+		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
+		
 	}
 }
