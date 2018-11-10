@@ -766,7 +766,7 @@ public class ManagedIncident {
 			//S2 user selects resolution codes
 			//clicks resolve; updated to resolved; note is saved
 			} else if (command.getCommand() == CommandValue.RESOLVE) {
-				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+				if (onHoldReason == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
 
