@@ -149,6 +149,16 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident b = new ManagedIncident(a);
 		
+		Incident bc = new Incident();
+		bc.setCaller("William");
+		bc.setCategory(ManagedIncident.C_NETWORK);
+		bc.setPriority(ManagedIncident.P_LOW);
+		bc.setName("Things");
+		bc.setWorkNotes(workNotes);
+		bc.setState(ManagedIncident.NEW_NAME);
+		
+		ManagedIncident cc = new ManagedIncident(bc);
+		
 		assertEquals(b.getCaller(), "William");
 		assertEquals(b.getIncidentId(), 0);
 		assertEquals(b.getChangeRequest(), null);
@@ -180,6 +190,10 @@ public class ManagedIncidentTest {
 		Command commandToCancel = new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
 		
 		b.update(commandToCancel);
+		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
+		
+		Command newStateCommand1= new Command (CommandValue.CANCEL, "William", null, null, CancellationCode.DUPLICATE, "note");
+		b.update(newStateCommand1);
 		assertEquals(b.getState().getStateName(), ManagedIncident.CANCELED_NAME);
 		
 	}
