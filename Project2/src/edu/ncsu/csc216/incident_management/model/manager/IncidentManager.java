@@ -81,9 +81,7 @@ public class IncidentManager {
 			//}
 			//reader.getIncidents().get(i)
 			this.incidentList.addXMLIncidents(reader.getIncidents());
-			for (int i = 0; i < incidentList.getManagedIncidents().size(); i++) {
-				System.out.println(incidentList.getManagedIncidents().get(i).getIncidentId());
-			}
+			
 				
 		
 		} catch (IncidentIOException e) {
@@ -140,7 +138,6 @@ public class IncidentManager {
 					}
 				}
 			}
-		System.out.println(incidentArray);
 		return incidentArray;
 	}
 	/**

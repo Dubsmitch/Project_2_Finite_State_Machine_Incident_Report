@@ -108,9 +108,7 @@ public class ManagedIncidentList {
 	public ManagedIncident getIncidentById(int id) {
 		
 		for (int i = 0; i < incidents.size(); i++) {
-			System.out.println("Trying to get incident By id: " + id);
 			if (incidents.get(i).getIncidentId() == id) {
-				System.out.println("went into if to get incident By id");
 				return incidents.get(i);
 			}
 		}
