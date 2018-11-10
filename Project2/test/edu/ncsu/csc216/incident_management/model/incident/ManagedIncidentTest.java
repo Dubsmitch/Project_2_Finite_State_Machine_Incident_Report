@@ -160,7 +160,14 @@ public class ManagedIncidentTest {
 		Command commandToProgress = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
 		b.update(commandToProgress);
 		assertEquals(b.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
-
+		
+		Command commandToResolve = new Command (CommandValue.RESOLVE, "William", null,  ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE, "note");
+		b.update(commandToResolve);
+		assertEquals(b.getState().getStateName(), ManagedIncident.RESOLVED_NAME);
+		
+		Command commandToREOPEN = new Command (CommandValue.REOPEN, "William", null, null, CancellationCode.DUPLICATE, "note");
+		b.update(commandToREOPEN);
+		assertEquals(b.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
 		Command commandToOnHold = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
 		b.update(commandToOnHold);
