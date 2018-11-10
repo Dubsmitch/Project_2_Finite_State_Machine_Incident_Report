@@ -157,6 +157,7 @@ public class ManagedIncidentTest {
 		bc.setWorkNotes(workNotes);
 		bc.setState(ManagedIncident.NEW_NAME);
 		
+		@SuppressWarnings("unused")
 		ManagedIncident cc = new ManagedIncident(bc);
 		
 		assertEquals(b.getCaller(), "William");
