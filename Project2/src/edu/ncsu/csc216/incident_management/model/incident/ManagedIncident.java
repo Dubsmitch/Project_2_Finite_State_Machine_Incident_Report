@@ -706,9 +706,7 @@ public class ManagedIncident {
 			//S1
 			} else if (command.getCommand() == CommandValue.HOLD) {
 				onHoldReason = command.getOnHoldReason();
-				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
-					changeRequest = command.getWorkNote();
-				}
+				
 				notes.add(command.getWorkNote());
 				state = onHoldState;
 			//S2 (resolution)
@@ -786,7 +784,12 @@ public class ManagedIncident {
 				cancellationCode = command.getCancellationCode();
 				onHoldReason = null;
 			// TODO Auto-generated method stub
-			}		
+			} else if(command.getCommand() == CommandValue.HOLD) {
+				throw new UnsupportedOperationException ("invaild command");
+			} else if(command.getCommand() == CommandValue.CONFIRM) {
+				throw new UnsupportedOperationException ("invaild command");
+			}else if(command.getCommand() == CommandValue.INVESTIGATE) {
+				throw new UnsupportedOperationException ("invaild command");
 		}
 		/**
 		 * returns the state's name
@@ -844,6 +847,10 @@ public class ManagedIncident {
 				state = canceledState;
 				resolutionCode = null;
 				
+			} else if(command.getCommand() == CommandValue.RESOLVE) {
+				throw new UnsupportedOperationException ("invaild command");
+			} else if(command.getCommand() == CommandValue.INVESTIGATE) {
+				throw new UnsupportedOperationException ("invaild command");
 			}
 		}
 		/**
