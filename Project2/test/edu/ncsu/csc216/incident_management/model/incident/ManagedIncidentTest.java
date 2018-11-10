@@ -534,10 +534,10 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident onHoldManagedIncident = new ManagedIncident(onHoldIncident);
 		
-		Command OnHoldMe = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		Command onHoldMe = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
 		
 		try {
-			onHoldManagedIncident.update(OnHoldMe);
+			onHoldManagedIncident.update(onHoldMe);
 			fail("should thow an exception");
 		} catch (UnsupportedOperationException e) {
 			assertEquals(onHoldIncident.getCaller(), "William");
@@ -545,10 +545,10 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident onHoldManagedIncident1 = new ManagedIncident(onHoldIncident);
 		
-		Command OnHoldMe1 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		Command onHoldMe1 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
 		
 		try {
-			onHoldManagedIncident1.update(OnHoldMe1);
+			onHoldManagedIncident1.update(onHoldMe1);
 			fail("should thow an exception");
 		} catch (UnsupportedOperationException e) {
 			assertEquals(onHoldManagedIncident1.getCaller(), "William");
