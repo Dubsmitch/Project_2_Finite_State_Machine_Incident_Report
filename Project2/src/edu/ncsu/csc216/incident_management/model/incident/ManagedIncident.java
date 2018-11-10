@@ -113,8 +113,7 @@ public class ManagedIncident {
 	 * 		the work note associated with the incident
 	 */
 	public ManagedIncident (String caller, Category category, Priority priority, String name, String workNote) {
-		if (caller.equals("") || 
-				caller == null || 
+		if (caller.equals("") ||  
 				category == null || 
 				priority == null || 
 				name.equals("") ||
