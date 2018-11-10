@@ -514,7 +514,7 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident newIncident3 = new ManagedIncident(newTest);
 		
-		Command newMe3 = new Command (CommandValue.RESOLVE, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		Command newMe3 = new Command (CommandValue.RESOLVE, "William", OnHoldReason.AWAITING_CALLER, ResolutionCode.NOT_SOLVED, CancellationCode.DUPLICATE, "note");
 		
 		try {
 			newIncident3.update(newMe3);

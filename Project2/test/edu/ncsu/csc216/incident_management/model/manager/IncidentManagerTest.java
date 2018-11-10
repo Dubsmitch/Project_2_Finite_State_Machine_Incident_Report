@@ -108,9 +108,9 @@ public class IncidentManagerTest {
 		assertEquals(manager.getManagedIncidentById(1).getCaller(), "sesmith5");
 		assertEquals(manager.getManagedIncidentById(5).getCaller(), "student2");
 		
-		manager.executeCommand(1, command);
+		manager.executeCommand(2, command);
 		
-		assertEquals(manager.getManagedIncidentById(1).getCaller(), "sesmith5");
+		assertEquals(manager.getManagedIncidentById(2).getCaller(), "sesmith5");
 		
 	}
 	
