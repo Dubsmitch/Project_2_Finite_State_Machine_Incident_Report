@@ -762,6 +762,7 @@ public class ManagedIncident {
 				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
+				onHoldReason = null;
 				state = inProgressState;
 			//S2 user selects resolution codes
 			//clicks resolve; updated to resolved; note is saved
@@ -769,14 +770,15 @@ public class ManagedIncident {
 				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
-				onHoldReason = command.getOnHoldReason();
+				resolutionCode = command.getResolutionCode();
+				onHoldReason = null;
 				notes.add(command.getWorkNote());
 				state = resolvedState;
 			//S3 user determines the incident should be cancelled
 			//clicks cancel; updates cancellation code;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
 				cancellationCode = command.getCancellationCode();
-				
+				onHoldReason = null;
 				notes.add(command.getWorkNote());
 				state = canceledState;
 			// TODO Auto-generated method stub
