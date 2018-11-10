@@ -1,11 +1,13 @@
 package edu.ncsu.csc216.incident_management.model.manager;
 
+import java.awt.List;
 import java.io.Reader;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.incident.io.IncidentIOException;
 import edu.ncsu.csc216.incident.io.IncidentReader;
 import edu.ncsu.csc216.incident.io.IncidentWriter;
+import edu.ncsu.csc216.incident.xml.Incident;
 import edu.ncsu.csc216.incident_management.model.command.Command;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
@@ -31,7 +33,7 @@ public class IncidentManager {
 	 * one is created
 	 */
 	private IncidentManager() {
-		getInstance();
+		incidentList = new ManagedIncidentList();
 	}
 	
 	/**
@@ -43,7 +45,8 @@ public class IncidentManager {
 	public static IncidentManager getInstance() {
 		if (singleton == null) {
 			singleton = new IncidentManager();
-		}
+		} 
+		
 		return singleton;
 	}
 	
@@ -67,7 +70,20 @@ public class IncidentManager {
 	public void loadManagedIncidentsFromFile(String fileName) {
 		try {
 			IncidentReader reader = new IncidentReader(fileName);
-			//reader.
+			System.out.println(reader.getIncidents().size());
+			ArrayList<Incident> newList = new ArrayList<Incident>();
+			for (int i = 0; i < reader.getIncidents().size(); i++) {
+				System.out.println(i);
+				System.out.println(reader.getIncidents().get(i).getCaller());
+				System.out.println(reader.getIncidents().get(i).getState());
+				System.out.println(reader.getIncidents().get(i).getOnHoldReason());
+
+				//incidentList.addXMLIncidents(reader.get);
+				
+				newList.add(reader.getIncidents().get(i));
+			}
+			incidentList.addXMLIncidents(newList);
+		
 		} catch (IncidentIOException e) {
 			throw new IllegalArgumentException ("Cannot read from file");
 		}

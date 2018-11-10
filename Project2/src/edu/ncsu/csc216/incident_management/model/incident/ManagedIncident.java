@@ -239,19 +239,19 @@ public class ManagedIncident {
 			//public enum Category { INQUIRY, SOFTWARE, HARDWARE, NETWORK, DATABASE }
 			
 			//if category is inquiry
-			if (string == C_INQUIRY) {
+			if (string.equals(C_INQUIRY)) {
 				this.category = Category.INQUIRY;
 			//if category is software
-			} else if (string == C_SOFTWARE) {
+			} else if (string.equals(C_SOFTWARE)) {
 				this.category = Category.SOFTWARE;
 			//if category is hardware
-			} else if (string == C_HARDWARE) {
+			} else if (string.equals(C_HARDWARE)) {
 				this.category = Category.HARDWARE;
 			//if category is network
-			} else if (string == C_NETWORK) {
+			} else if (string.equals(C_NETWORK)) {
 				this.category = Category.NETWORK;
 			//if category is database
-			} else if (string == C_DATABASE) {
+			} else if (string.equals(C_DATABASE)) {
 				this.category = Category.DATABASE;
 			} else {
 				throw new IllegalArgumentException ("incident must have a category");
@@ -289,19 +289,19 @@ public class ManagedIncident {
 
 		
 		//if priority is urgent
-		if (string == P_URGENT) {
+		if (string.equals(P_URGENT)) {
 			
 			this.priority =  Priority.URGENT;
 		//if priority is High
-		} else if (string == P_HIGH) {
+		} else if (string.equals(P_HIGH)) {
 				
 			this.priority = Priority.HIGH;
 		//if priority is Medium
-		} else if (string == P_MEDIUM) {
+		} else if (string.equals(P_MEDIUM)) {
 								
 			this.priority =  Priority.MEDIUM;
 		//if priority is Medium
-		} else if (string == P_LOW) {
+		} else if (string.equals(P_LOW)) {
 									
 			this.priority =  Priority.LOW;
 		} else {
@@ -355,11 +355,16 @@ public class ManagedIncident {
 	 * @param string
 	 */
 	private void setOnHoldReason(String string) {
-		if (string == Command.OH_CALLER) {
+		System.out.println("on hold reason called");
+		if (string == null || string.equals("")) {
+			this.onHoldReason = null;
+		}
+		if (string.equals(Command.OH_CALLER)) {
+			System.out.println("on hold reason awaitingcaller");
 			this.onHoldReason = OnHoldReason.AWAITING_CALLER;
-		} else if (string == Command.OH_CHANGE) {
+		} else if (string.equals(Command.OH_CHANGE)) {
 			this.onHoldReason = OnHoldReason.AWAITING_CHANGE;
-		} else if (string == Command.OH_VENDOR) {
+		} else if (string.equals(Command.OH_VENDOR)) {
 			this.onHoldReason = OnHoldReason.AWAITING_VENDOR;
 		}
 	}
@@ -404,11 +409,11 @@ public class ManagedIncident {
 //		/** information about cancellation **/
 //		public static final String CC_NOT_AN_INCIDENT = "Not and incident";
 		
-		if (string == Command.CC_DUPLICATE) {
+		if (string.equals(Command.CC_DUPLICATE)) {
 			this.cancellationCode = CancellationCode.DUPLICATE;
-		} else if (string == Command.CC_UNNECESSARY) {
+		} else if (string.equals(Command.CC_UNNECESSARY)) {
 			this.cancellationCode = CancellationCode.UNNECESSARY;
-		} else if (string == Command.CC_NOT_AN_INCIDENT) {
+		} else if (string.equals(Command.CC_NOT_AN_INCIDENT)) {
 			this.cancellationCode = CancellationCode.NOT_AN_INCIDENT;
 		} else {
 			this.cancellationCode = null;
@@ -430,17 +435,23 @@ public class ManagedIncident {
 	 * 		the state to set the current state to
 	 */
 	private void setState (String string) {
-		if (string == NEW_NAME ) {
+		if (string.equals(NEW_NAME) ) {
+			System.out.println("new state");
 			this.state = newState;
-		} else if (string == IN_PROGRESS_NAME) {
+		} else if (string.equals(IN_PROGRESS_NAME)) {
+			System.out.println("in progress state");
 			this.state = inProgressState;
-		} else if (string == ON_HOLD_NAME) {
+		} else if (string.equals(ON_HOLD_NAME)) {
+			System.out.println("oh state");
 			this.state = onHoldState;
-		} else if (string == RESOLVED_NAME) {
+		} else if (string.equals(RESOLVED_NAME)) {
+			System.out.println("resolved");
 			this.state = resolvedState;
-		} else if (string == CLOSED_NAME) {
+		} else if (string.equals(CLOSED_NAME)) {
+			System.out.println("closed");
 			this.state = closedState;
-		} else if (string == CANCELED_NAME) {
+		} else if (string.equals(CANCELED_NAME)) {
+			System.out.println("canceled");
 			this.state = canceledState;
 		} else {
 			throw new IllegalArgumentException ("must have a state");
@@ -500,13 +511,13 @@ public class ManagedIncident {
 //		/** information regarding resolution **/
 //		public static final String RC_CALLER_CLOSED = "Caller Closed";
 
-		if (string == Command.RC_PERMANENTLY_SOLVED) {
+		if (string.equals(Command.RC_PERMANENTLY_SOLVED)) {
 			this.resolutionCode =  ResolutionCode.PERMANENTLY_SOLVED;
-		} else if (string == Command.RC_CALLER_CLOSED) {
+		} else if (string.equals(Command.RC_CALLER_CLOSED)) {
 			this.resolutionCode =  ResolutionCode.CALLER_CLOSED;
-		} else if (string == Command.RC_WORKAROUND) {
+		} else if (string.equals(Command.RC_WORKAROUND)) {
 			this.resolutionCode =  ResolutionCode.WORKAROUND;
-		} else if (string == Command.RC_NOT_SOLVED) {
+		} else if (string.equals( Command.RC_NOT_SOLVED)) {
 			this.resolutionCode =  ResolutionCode.NOT_SOLVED;
 		} else {
 			this.resolutionCode = null;

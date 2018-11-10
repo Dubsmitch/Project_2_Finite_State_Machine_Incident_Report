@@ -7,8 +7,9 @@ import org.junit.Test;
 public class IncidentManagerTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testloadManagedIncidentsFromFile() {
+		IncidentManager manager = IncidentManager.getInstance();
+		manager.loadManagedIncidentsFromFile("test-files/incident1.xml");
 	}
 
 }
