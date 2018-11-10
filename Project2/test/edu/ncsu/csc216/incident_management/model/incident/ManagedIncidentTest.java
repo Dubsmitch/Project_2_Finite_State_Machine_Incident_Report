@@ -34,7 +34,7 @@ public class ManagedIncidentTest {
 		assertEquals(a.getCategory(), Category.INQUIRY);
 		assertEquals(a.getPriorityString(), ManagedIncident.P_URGENT);
 		assertEquals(a.getName(), "car stuff");
-		assertEquals(a.getNotesString(), "Calling cause stuff\n--\n");
+		assertEquals(a.getNotesString(), "Calling cause stuff\n-------\n");
 				
 		assertEquals(a.getState().getStateName(), ManagedIncident.NEW_NAME);
 		assertEquals(a.getOwner(), null);
