@@ -572,9 +572,7 @@ public class ManagedIncident {
 	 * 		the command that updates the incident
 	 */
 	public void update(Command command) {
-		System.out.println("update is being called");
 		state.updateState(command);
-		System.out.println(this.getState().getStateName());
 	}
 	/**
 	 * returns the current incident for saving
@@ -855,6 +853,8 @@ public class ManagedIncident {
 			}else if(command.getCommand() == CommandValue.REOPEN) {
 				throw new UnsupportedOperationException ("invaild command");
 			}else if(command.getCommand() == CommandValue.HOLD) {
+				throw new UnsupportedOperationException ("invaild command");
+			}else if(command.getCommand() == CommandValue.INVESTIGATE) {
 				throw new UnsupportedOperationException ("invaild command");
 			}
 		}
