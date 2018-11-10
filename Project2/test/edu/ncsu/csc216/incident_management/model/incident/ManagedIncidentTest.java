@@ -115,4 +115,28 @@ public class ManagedIncidentTest {
 		//test to see if the caller name is the same
 		assertEquals(b.getXMLIncident().getCaller(), "William");
 	}
+	
+	/**
+	 * testing transitions? maybe here? dunno
+	 */
+	@Test
+	public void testTransitions() {
+        WorkNotes workNotes = new WorkNotes();
+		Incident a = new Incident();
+		a.setCaller("William");
+		a.setCategory(ManagedIncident.C_NETWORK);
+		a.setPriority(ManagedIncident.P_LOW);
+		a.setName("Things");
+		a.setWorkNotes(workNotes);
+		a.setState(ManagedIncident.IN_PROGRESS_NAME);
+		
+		ManagedIncident b = new ManagedIncident(a);
+		
+		assertEquals(b.getCaller(), "William");
+		assertEquals(b.getIncidentId(), 0);
+		assertEquals(b.getChangeRequest(), null);
+		
+		//test to see if the caller name is the same
+		assertEquals(b.getXMLIncident().getCaller(), "William");
+	}
 }

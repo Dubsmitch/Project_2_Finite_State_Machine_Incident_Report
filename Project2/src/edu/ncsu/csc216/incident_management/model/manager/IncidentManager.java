@@ -60,6 +60,7 @@ public class IncidentManager {
 		for (int i = 0; i < incidentList.getManagedIncidents().size(); i++) {
 			writer.addItem(incidentList.getManagedIncidents().get(i).getXMLIncident());
 		}
+		
 	}
 	
 	/**
@@ -70,19 +71,19 @@ public class IncidentManager {
 	public void loadManagedIncidentsFromFile(String fileName) {
 		try {
 			IncidentReader reader = new IncidentReader(fileName);
-			System.out.println(reader.getIncidents().size());
-			ArrayList<Incident> newList = new ArrayList<Incident>();
-			for (int i = 0; i < reader.getIncidents().size(); i++) {
-				System.out.println(i);
-				System.out.println(reader.getIncidents().get(i).getCaller());
-				System.out.println(reader.getIncidents().get(i).getState());
-				System.out.println(reader.getIncidents().get(i).getOnHoldReason());
+			//System.out.println(reader.getIncidents().size());
+			//for testing
+			//for (int i = 0; i < reader.getIncidents().size(); i++) {
 
-				//incidentList.addXMLIncidents(reader.get);
 				
-				newList.add(reader.getIncidents().get(i));
+				//newList.add(reader.getIncidents().get(i));
+			//}
+			//reader.getIncidents().get(i)
+			this.incidentList.addXMLIncidents(reader.getIncidents());
+			for (int i = 0; i < incidentList.getManagedIncidents().size(); i++) {
+				System.out.println(incidentList.getManagedIncidents().get(i).getIncidentId());
 			}
-			incidentList.addXMLIncidents(newList);
+				
 		
 		} catch (IncidentIOException e) {
 			throw new IllegalArgumentException ("Cannot read from file");
@@ -90,11 +91,15 @@ public class IncidentManager {
 		
 		
 	}
+	//for testing only
+	protected ManagedIncidentList getList() {
+		return this.incidentList;
+	}
 	/**
 	 * creates a new managed incident list
 	 */
 	public void createNewManagedIncidentList() {
-		//To-Do
+		incidentList = new ManagedIncidentList();
 	}
 	/**
 	 * returns an array sorted by category
@@ -105,7 +110,31 @@ public class IncidentManager {
 	 * 			the array of strings holding the category
 	 */
 	public String[][] getManagedIncidentsAsArrayByCategory(Category category) {
-		return null;
+		//this should gets an array of only a specific category
+		if (category == null) {
+			throw new IllegalArgumentException ("category cannot be null");
+		}
+		
+		ArrayList<ManagedIncident> newIncidentList = new ArrayList<ManagedIncident>();
+		newIncidentList = (ArrayList<ManagedIncident>) incidentList.getIncidentsByCategory(category);
+		String[][] incidentArray = new String[newIncidentList.size()][5];
+			for (int j = 0; j < newIncidentList.size(); j++) {
+				for (int i = 0; i < 5; i++) {
+					if (i == 0) {
+						incidentArray[j][0] = Integer.toString(newIncidentList.get(j).getIncidentId());
+					} else if (i == 1) {
+						incidentArray[j][1] = newIncidentList.get(j).getCategoryString();
+					} else if (i == 2) {
+						incidentArray[j][2] = newIncidentList.get(j).getState().getStateName();
+					} else if (i == 3) {
+						incidentArray[j][3] = newIncidentList.get(j).getPriorityString();
+					} else if (i == 4) {
+						incidentArray[j][4] = newIncidentList.get(j).getName();
+					}
+				}
+			}
+		System.out.println(incidentArray);
+		return incidentArray;
 	}
 	/**
 	 * returns a string array of managed incidents
@@ -113,7 +142,23 @@ public class IncidentManager {
 	 * 			the String representation of managed incidents
 	 */
 	public String[][] getManagedIncidentsAsArray() {
-		return null;
+		String[][] incidentArray = new String[incidentList.getManagedIncidents().size()][5];
+		for (int j = 0; j < incidentList.getManagedIncidents().size(); j++) {
+			for (int i = 0; i < 5; i++) {
+				if (i == 0) {
+					incidentArray[j][0] = Integer.toString(incidentList.getManagedIncidents().get(j).getIncidentId());
+				} else if (i == 1) {
+					incidentArray[j][1] = incidentList.getManagedIncidents().get(j).getCategoryString();
+				} else if (i == 2) {
+					incidentArray[j][2] = incidentList.getManagedIncidents().get(j).getState().getStateName();
+				} else if (i == 3) {
+					incidentArray[j][3] = incidentList.getManagedIncidents().get(j).getPriorityString();
+				} else if (i == 4) {
+					incidentArray[j][4] = incidentList.getManagedIncidents().get(j).getName();
+				}
+			}
+		}
+	return incidentArray;
 	}
 	/**
 	 * retrieves a managed incident by ID
@@ -124,16 +169,17 @@ public class IncidentManager {
 	 * 			the managed incident with the provided id
 	 */
 	public ManagedIncident getManagedIncidentById(int id) {
-		return null;
+		return incidentList.getIncidentById(id);
 	}
 	/**
 	 * executes the command
 	 * @param i
+	 * 		the id of the incident
 	 * @param c
 	 * 		the command
 	 */
 	public void executeCommand(int i, Command c) {
-		//To-Do
+		incidentList.getIncidentById(i).update(c);
 	}
 	/**
 	 * deletes a managed incident by id
@@ -141,7 +187,7 @@ public class IncidentManager {
 	 * 			the id of the incident to be deleted
 	 */
 	public void deleteManagedIncidentById(int id) {
-		//To-Do
+		incidentList.deleteIncidentById(id);
 	}
 	/**
 	 * adds a managed incident to the list
@@ -159,7 +205,7 @@ public class IncidentManager {
 	 */
 	public void addManagedIncidentToList(String caller, Category category, Priority
 								priority, String name, String workNote) {
-		//ToDo
+		incidentList.addIncident(caller, category, priority, name, workNote);
 	}
 	
 }

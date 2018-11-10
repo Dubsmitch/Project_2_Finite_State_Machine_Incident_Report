@@ -95,7 +95,7 @@ public class ManagedIncident {
 	/** final instance of the canceled state **/
 	private final IncidentState canceledState = new CanceledState();
 	/** instance of state **/
-	private IncidentState state = newState;
+	private IncidentState state;
 	
 	
 	/**
@@ -355,12 +355,11 @@ public class ManagedIncident {
 	 * @param string
 	 */
 	private void setOnHoldReason(String string) {
-		System.out.println("on hold reason called");
-		if (string == null || string.equals("")) {
+
+		if(string == null) {
 			this.onHoldReason = null;
-		}
-		if (string.equals(Command.OH_CALLER)) {
-			System.out.println("on hold reason awaitingcaller");
+		} else if (string.equals(Command.OH_CALLER)) {
+
 			this.onHoldReason = OnHoldReason.AWAITING_CALLER;
 		} else if (string.equals(Command.OH_CHANGE)) {
 			this.onHoldReason = OnHoldReason.AWAITING_CHANGE;
@@ -408,15 +407,14 @@ public class ManagedIncident {
 //		public static final String CC_UNNECESSARY = "Unnecessary";
 //		/** information about cancellation **/
 //		public static final String CC_NOT_AN_INCIDENT = "Not and incident";
-		
-		if (string.equals(Command.CC_DUPLICATE)) {
+		 if (string == null){
+				this.cancellationCode = null;
+	 	} else if (string.equals(Command.CC_DUPLICATE)) {
 			this.cancellationCode = CancellationCode.DUPLICATE;
 		} else if (string.equals(Command.CC_UNNECESSARY)) {
 			this.cancellationCode = CancellationCode.UNNECESSARY;
 		} else if (string.equals(Command.CC_NOT_AN_INCIDENT)) {
 			this.cancellationCode = CancellationCode.NOT_AN_INCIDENT;
-		} else {
-			this.cancellationCode = null;
 		}
 	}
 	/**
@@ -435,23 +433,18 @@ public class ManagedIncident {
 	 * 		the state to set the current state to
 	 */
 	private void setState (String string) {
-		if (string.equals(NEW_NAME) ) {
-			System.out.println("new state");
+		if (string.equals(NEW_NAME)) {
+
 			this.state = newState;
 		} else if (string.equals(IN_PROGRESS_NAME)) {
-			System.out.println("in progress state");
 			this.state = inProgressState;
 		} else if (string.equals(ON_HOLD_NAME)) {
-			System.out.println("oh state");
 			this.state = onHoldState;
 		} else if (string.equals(RESOLVED_NAME)) {
-			System.out.println("resolved");
 			this.state = resolvedState;
 		} else if (string.equals(CLOSED_NAME)) {
-			System.out.println("closed");
 			this.state = closedState;
 		} else if (string.equals(CANCELED_NAME)) {
-			System.out.println("canceled");
 			this.state = canceledState;
 		} else {
 			throw new IllegalArgumentException ("must have a state");
@@ -510,8 +503,9 @@ public class ManagedIncident {
 //		public static final String RC_NOT_SOLVED = "Not Solved";
 //		/** information regarding resolution **/
 //		public static final String RC_CALLER_CLOSED = "Caller Closed";
-
-		if (string.equals(Command.RC_PERMANENTLY_SOLVED)) {
+		if(string == null) {
+			this.resolutionCode = null;
+		} else if (string.equals(Command.RC_PERMANENTLY_SOLVED)) {
 			this.resolutionCode =  ResolutionCode.PERMANENTLY_SOLVED;
 		} else if (string.equals(Command.RC_CALLER_CLOSED)) {
 			this.resolutionCode =  ResolutionCode.CALLER_CLOSED;
@@ -519,8 +513,6 @@ public class ManagedIncident {
 			this.resolutionCode =  ResolutionCode.WORKAROUND;
 		} else if (string.equals( Command.RC_NOT_SOLVED)) {
 			this.resolutionCode =  ResolutionCode.NOT_SOLVED;
-		} else {
-			this.resolutionCode = null;
 		}
 	}
 	/**
@@ -570,7 +562,7 @@ public class ManagedIncident {
 		String stringOfNotes = "";
 		
 		for (int i = 0; i < lengthOfNotes; i++) {
-			stringOfNotes = this.notes.get(i) + "\n--\n";
+			stringOfNotes = stringOfNotes + this.notes.get(i) + "\n--\n";
 		}
 		return stringOfNotes;
 	}
@@ -580,7 +572,9 @@ public class ManagedIncident {
 	 * 		the command that updates the incident
 	 */
 	public void update(Command command) {
-		//make this
+		System.out.println("update is being called");
+		state.updateState(command);
+		System.out.println(this.getState().getStateName());
 	}
 	/**
 	 * returns the current incident for saving
@@ -657,10 +651,17 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
+			
 			if (command.getCommand() == CommandValue.CANCEL) {
+				notes.add(command.getWorkNote());
+				cancellationCode = command.getCancellationCode();
 				state = canceledState;
+
 			} else if (command.getCommand() == CommandValue.INVESTIGATE) {
-				
+				owner = command.getOwnerId();
+				notes.add(command.getWorkNote());
+				state = inProgressState;
+
 			}
 		}
 		/**
@@ -689,8 +690,25 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
-		
+			//S3
+			if (command.getCommand() == CommandValue.CANCEL) {
+				notes.add(command.getWorkNote());
+				cancellationCode = command.getCancellationCode();
+				state = canceledState;
+			//S1
+			} else if (command.getCommand() == CommandValue.HOLD) {
+				onHoldReason = command.getOnHoldReason();
+				
+				notes.add(command.getWorkNote());
+				state = onHoldState;
+			//S2 (resolution)
+			} else if (command.getCommand() == CommandValue.RESOLVE) {
+				resolutionCode = command.getResolutionCode();
+				
+				notes.add(command.getWorkNote());
+				state = resolvedState;
 			// TODO Auto-generated method stub
+			}
 		
 		}
 		/**
@@ -700,7 +718,7 @@ public class ManagedIncident {
 		 */
 		@Override
 		public String getStateName() {
-			return NEW_NAME;
+			return IN_PROGRESS_NAME;
 		}
 	}
 	
@@ -720,8 +738,35 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
+			//[S1] The user clicks Reopen. The incident’s state is updated to In Progress. 
+			//The note is saved with the incident. If the On Hold reason was Awaiting Change, 
+			//then the note is saved as the change request for the incident. 
+			//The user is returned to the incident list [UC2] and the incident’s 
+			//listing reflects the updated state.
+			if (command.getCommand() == CommandValue.REOPEN) {
+				notes.add(command.getWorkNote());
+				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+					changeRequest = command.getWorkNote();
+				}
+				state = inProgressState;
+			//S2 user selects resolution codes
+			//clicks resolve; updated to resolved; note is saved
+			} else if (command.getCommand() == CommandValue.RESOLVE) {
+				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+					changeRequest = command.getWorkNote();
+				}
+				onHoldReason = command.getOnHoldReason();
+				notes.add(command.getWorkNote());
+				state = resolvedState;
+			//S3 user determines the incident should be cancelled
+			//clicks cancel; updates cancellation code;
+			} else if (command.getCommand() == CommandValue.CANCEL) {
+				cancellationCode = command.getCancellationCode();
+				
+				notes.add(command.getWorkNote());
+				state = canceledState;
 			// TODO Auto-generated method stub
-		
+			}		
 		}
 		/**
 		 * returns the state's name
@@ -747,10 +792,34 @@ public class ManagedIncident {
 		 * @param command
 		 * 		the command that changes the state
 		 */
-		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-		
+			//[S1] selects one of 4 on hold reasons
+			//selects hold; updated to on hold (done), note saved
+			if (command.getCommand() == CommandValue.HOLD) {
+				notes.add(command.getWorkNote());
+				//if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+				//	changeRequest = command.getWorkNote();
+				//}
+				state = onHoldState;
+			//S2 user selects to reopen
+			//state set to INPROGRESS, note is saved 
+			} else if (command.getCommand() == CommandValue.REOPEN) {
+				//if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+				//	changeRequest = command.getWorkNote();
+				//}
+				notes.add(command.getWorkNote());
+				state = inProgressState;
+			//S3 user confirms
+			//state to closed, note saved,  
+			} else if (command.getCommand() == CommandValue.CONFIRM) {				
+				notes.add(command.getWorkNote());
+				state = closedState;
+			} else if (command.getCommand() == CommandValue.CANCEL) {
+				cancellationCode = command.getCancellationCode();
+				notes.add(command.getWorkNote());
+				state = canceledState;
+				
+			}
 		}
 		/**
 		 * returns the state's name
@@ -806,8 +875,13 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-		
+			if (command.getCommand() == CommandValue.REOPEN) {
+				notes.add(command.getWorkNote());
+				//if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+				//	changeRequest = command.getWorkNote();
+				//}
+				state = inProgressState;
+			}
 		}
 		/**
 		 * returns the state's name
