@@ -224,7 +224,26 @@ public class ManagedIncidentTest {
 		qc.update(newStateCommand5);
 		assertEquals(qc.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
+		Incident tooMuch = new Incident();
 		
+		tooMuch.setCaller("William");
+		tooMuch.setCategory(ManagedIncident.C_NETWORK);
+		tooMuch.setPriority(ManagedIncident.P_LOW);
+		tooMuch.setName("Things");
+		tooMuch.setWorkNotes(workNotes);
+		tooMuch.setState(ManagedIncident.ON_HOLD_NAME);
+		
+		ManagedIncident noPartners = new ManagedIncident(tooMuch);
+		
+		//(CommandValue c, String ownerId,
+		//		OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
+		//		CancellationCode cancellationCode, String note)
+		
+		Command test500 = new Command (CommandValue.REOPEN, 
+				"William", OnHoldReason.AWAITING_CALLER, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE,
+				"note");
+		noPartners.update(test500);
+		assertEquals(noPartners.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
 		
 	}
