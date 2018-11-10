@@ -705,9 +705,7 @@ public class ManagedIncident {
 			//S1
 			} else if (command.getCommand() == CommandValue.HOLD) {
 				onHoldReason = command.getOnHoldReason();
-				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
-					changeRequest = command.getWorkNote();
-				}
+				
 				notes.add(command.getWorkNote());
 				state = onHoldState;
 			//S2 (resolution)
@@ -760,7 +758,7 @@ public class ManagedIncident {
 			//listing reflects the updated state.
 			if (command.getCommand() == CommandValue.REOPEN) {
 				notes.add(command.getWorkNote());
-				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
+				if (onHoldReason == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
 				onHoldReason = null;
