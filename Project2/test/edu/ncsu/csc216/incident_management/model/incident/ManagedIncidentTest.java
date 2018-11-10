@@ -542,5 +542,18 @@ public class ManagedIncidentTest {
 		} catch (UnsupportedOperationException e) {
 			assertEquals(onHoldIncident.getCaller(), "William");
 		}
+		
+		ManagedIncident onHoldManagedIncident1 = new ManagedIncident(onHoldIncident);
+		
+		Command OnHoldMe1 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			onHoldManagedIncident1.update(OnHoldMe1);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(onHoldManagedIncident1.getCaller(), "William");
+		}
+		
+		
 	}
 }
