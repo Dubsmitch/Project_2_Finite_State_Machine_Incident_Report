@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 
 public class IncidentManagerTest {
 	/**
 	 * test the singleton and loading incidents from file
 	 */
+	@SuppressWarnings("static-access")
 	@Test
 	public void testloadManagedIncidentsFromFile() {
 		IncidentManager manager = IncidentManager.getInstance();
@@ -30,6 +30,7 @@ public class IncidentManagerTest {
 	/**
 	 * test the Category array and the general array
 	 */
+	@SuppressWarnings("static-access")
 	@Test
 	public void testArrayBuilders() {
 		IncidentManager manager = IncidentManager.getInstance();
@@ -62,6 +63,7 @@ public class IncidentManagerTest {
 	/**
 	 * test removing by ID
 	 */
+	@SuppressWarnings("static-access")
 	@Test
 	public void testRemoveById() {
 		IncidentManager manager = IncidentManager.getInstance();
