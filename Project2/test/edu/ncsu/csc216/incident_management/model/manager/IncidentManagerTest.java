@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.ncsu.csc216.incident_management.model.command.Command;
+import edu.ncsu.csc216.incident_management.model.command.Command.CommandValue;
+import edu.ncsu.csc216.incident_management.model.command.Command.OnHoldReason;
+import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 /**
  * the class that tests the incident Manager
@@ -40,6 +44,7 @@ public class IncidentManagerTest {
 	@Test
 	public void testArrayBuilders() {
 		IncidentManager manager = IncidentManager.getInstance();
+		manager.createNewManagedIncidentList();
 		manager.loadManagedIncidentsFromFile("test-files/incident1.xml");
 		
 		assertEquals(manager.getList().getManagedIncidents().size(), 6);
@@ -85,6 +90,28 @@ public class IncidentManagerTest {
 		manager.deleteManagedIncidentById(6);
 		
 		assertEquals(manager.getList().getManagedIncidents().size(), 5);
+	}
+	
+	/**
+	 * test execute Command
+	 */
+	@SuppressWarnings("static-access")
+	@Test
+	public void testCommandexecution() {
+		Command command = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
+
+		IncidentManager manager = IncidentManager.getInstance();
+		manager.createNewManagedIncidentList();
+		manager.loadManagedIncidentsFromFile("test-files/incident1.xml");
+		
+		assertEquals(manager.getList().getManagedIncidents().size(), 6);
+		assertEquals(manager.getManagedIncidentById(1).getCaller(), "sesmith5");
+		assertEquals(manager.getManagedIncidentById(5).getCaller(), "student2");
+		
+		manager.executeCommand(1, command);
+		
+		assertEquals(manager.getManagedIncidentById(1).getCaller(), "sesmith5");
+		
 	}
 	
 	
