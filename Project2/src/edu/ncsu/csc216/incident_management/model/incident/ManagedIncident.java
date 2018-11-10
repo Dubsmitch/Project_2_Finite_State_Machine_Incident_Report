@@ -705,6 +705,12 @@ public class ManagedIncident {
 				notes.add(command.getWorkNote());
 				state = resolvedState;
 			// TODO Auto-generated method stub
+			}else if (command.getCommand() == CommandValue.INVESTIGATE) {
+				throw new UnsupportedOperationException ("invaild command");
+			}else if (command.getCommand() == CommandValue.CONFIRM) {
+				throw new UnsupportedOperationException ("invaild command");
+			}else if (command.getCommand() == CommandValue.REOPEN) {
+				throw new UnsupportedOperationException ("invaild command");
 			}
 		
 		}
