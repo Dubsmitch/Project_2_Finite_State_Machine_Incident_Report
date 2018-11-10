@@ -9,7 +9,13 @@ import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
 
-
+/**
+ * this class will create a list of managed
+ * incidents and adds functionality to that list.
+ * 
+ * @author William
+ *
+ */
 public class ManagedIncidentList {
 
 	/** the array list of managed incidents **/
