@@ -460,7 +460,15 @@ public class ManagedIncidentTest {
 			investigateIncident3.update(investigateMe3);
 			fail("should thow an exception");
 		} catch (UnsupportedOperationException e) {
-			assertEquals(investigateIncident.getCaller(), "William");
+			assertEquals(investigateIncident3.getCaller(), "William");
 		}
+		
+		ManagedIncident investigateIncident4 = new ManagedIncident(investigateTest);
+		
+		Command investigateMe4 = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		investigateIncident4.update(investigateMe4);
+		assertEquals(investigateIncident4.getCaller(), "William");
+		
 	}
 }
