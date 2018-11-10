@@ -815,7 +815,6 @@ public class ManagedIncident {
 			//S3 user confirms
 			//state to closed, note saved,  
 			} else if (command.getCommand() == CommandValue.CONFIRM) {				
-				resolutionCode = command.getResolutionCode();
 				notes.add(command.getWorkNote());
 				state = closedState;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
