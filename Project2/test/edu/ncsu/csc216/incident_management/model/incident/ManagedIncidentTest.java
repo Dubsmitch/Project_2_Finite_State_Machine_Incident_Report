@@ -292,6 +292,20 @@ public class ManagedIncidentTest {
 		resolved2.update(newStateCommand211);
 		assertEquals(resolved2.getState().getStateName(), ManagedIncident.ON_HOLD_NAME);
 		
-	
+		Incident resolved5 = new Incident();
+		
+		resolved5.setCaller("William");
+		resolved5.setCategory(ManagedIncident.C_NETWORK);
+		resolved5.setPriority(ManagedIncident.P_LOW);
+		resolved5.setName("Things");
+		resolved5.setWorkNotes(workNotes);
+		resolved5.setState(ManagedIncident.RESOLVED_NAME);
+		
+		ManagedIncident resolvedNow = new ManagedIncident(resolved5);
+		
+		Command newStateCommand212 = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		resolvedNow.update(newStateCommand212);
+		assertEquals(resolvedNow.getState().getStateName(), ManagedIncident.ON_HOLD_NAME);
+		
 	}
 }
