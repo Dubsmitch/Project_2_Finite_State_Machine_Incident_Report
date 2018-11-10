@@ -899,7 +899,9 @@ public class ManagedIncident {
 				throw new UnsupportedOperationException ("invaild command");
 			} else if (command.getCommand() == CommandValue.CANCEL) {
 				throw new UnsupportedOperationException ("invaild command");
-			} 
+			} else if (command.getCommand() == CommandValue.INVESTIGATE) {
+				throw new UnsupportedOperationException ("invaild command");
+			}
 		}
 		/**
 		 * returns the state's name
