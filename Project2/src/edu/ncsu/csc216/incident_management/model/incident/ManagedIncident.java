@@ -651,7 +651,6 @@ public class ManagedIncident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			
 			if (command.getCommand() == CommandValue.CANCEL) {
 				notes.add(command.getWorkNote());
 				cancellationCode = command.getCancellationCode();

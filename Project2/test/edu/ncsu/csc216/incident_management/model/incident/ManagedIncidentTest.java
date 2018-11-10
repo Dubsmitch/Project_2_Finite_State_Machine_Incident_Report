@@ -210,7 +210,21 @@ public class ManagedIncidentTest {
 		Command newStateCommand2 = new Command (CommandValue.INVESTIGATE, "William", null, null, CancellationCode.DUPLICATE, "note");
 		qc.update(newStateCommand2);
 		assertEquals(qc.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
-				
+		
+		Command newStateCommand3 = new Command (CommandValue.RESOLVE, "William", null, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE, "note");
+		qc.update(newStateCommand3);
+		assertEquals(qc.getState().getStateName(), ManagedIncident.RESOLVED_NAME);
+		
+		Command newStateCommand4 = new Command (CommandValue.CONFIRM, "William", null, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE, "note");
+		qc.update(newStateCommand4);
+		assertEquals(qc.getState().getStateName(), ManagedIncident.CLOSED_NAME);
+		
+		Command newStateCommand5 = new Command (CommandValue.REOPEN, "William", null, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE, "note");
+		qc.update(newStateCommand5);
+		assertEquals(qc.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
+		
+		
+		
 		
 	}
 }
