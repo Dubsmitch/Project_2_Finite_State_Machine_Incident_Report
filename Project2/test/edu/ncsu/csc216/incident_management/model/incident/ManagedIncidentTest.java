@@ -245,6 +245,22 @@ public class ManagedIncidentTest {
 		noPartners.update(test500);
 		assertEquals(noPartners.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
+		Incident tooMuchtoo = new Incident();
+		
+		tooMuchtoo.setCaller("William");
+		tooMuchtoo.setCategory(ManagedIncident.C_NETWORK);
+		tooMuchtoo.setPriority(ManagedIncident.P_LOW);
+		tooMuchtoo.setName("Things");
+		tooMuchtoo.setWorkNotes(workNotes);
+		tooMuchtoo.setState(ManagedIncident.ON_HOLD_NAME);
+		
+		ManagedIncident noPartnersno = new ManagedIncident(tooMuchtoo);
+
+		Command test501 = new Command (CommandValue.REOPEN, 
+				"William", OnHoldReason.AWAITING_CHANGE, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE,
+				"note");
+		noPartnersno.update(test501);
+		assertEquals(noPartnersno.getState().getStateName(), ManagedIncident.IN_PROGRESS_NAME);
 		
 	}
 }
