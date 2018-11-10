@@ -522,5 +522,25 @@ public class ManagedIncidentTest {
 		} catch (UnsupportedOperationException e) {
 			assertEquals(newIncident3.getCaller(), "William");
 		}
+		
+		Incident onHoldIncident = new Incident();
+		
+		onHoldIncident.setCaller("William");
+		onHoldIncident.setCategory(ManagedIncident.C_NETWORK);
+		onHoldIncident.setPriority(ManagedIncident.P_LOW);
+		onHoldIncident.setName("Things");
+		onHoldIncident.setWorkNotes(workNotes);
+		onHoldIncident.setState(ManagedIncident.ON_HOLD_NAME);
+		
+		ManagedIncident onHoldManagedIncident = new ManagedIncident(onHoldIncident);
+		
+		Command OnHoldMe = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			onHoldManagedIncident.update(OnHoldMe);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(onHoldIncident.getCaller(), "William");
+		}
 	}
 }
