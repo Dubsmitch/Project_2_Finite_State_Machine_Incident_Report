@@ -420,5 +420,47 @@ public class ManagedIncidentTest {
 		} catch (UnsupportedOperationException e) {
 			assertEquals(actuaulclosedStateTest2.getCaller(), "William");
 		}
+		
+		Incident investigateTest = new Incident();
+		
+		investigateTest.setCaller("William");
+		investigateTest.setCategory(ManagedIncident.C_NETWORK);
+		investigateTest.setPriority(ManagedIncident.P_LOW);
+		investigateTest.setName("Things");
+		investigateTest.setWorkNotes(workNotes);
+		investigateTest.setState(ManagedIncident.IN_PROGRESS_NAME);
+		
+		ManagedIncident investigateIncident = new ManagedIncident(investigateTest);
+		
+		Command investigateMe = new Command (CommandValue.INVESTIGATE, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			investigateIncident.update(investigateMe);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(investigateIncident.getCaller(), "William");
+		}
+		
+		ManagedIncident investigateIncident2 = new ManagedIncident(investigateTest);
+		
+		Command investigateMe2 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			investigateIncident2.update(investigateMe2);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(investigateIncident.getCaller(), "William");
+		}
+		
+		ManagedIncident investigateIncident3 = new ManagedIncident(investigateTest);
+		
+		Command investigateMe3 = new Command (CommandValue.REOPEN, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			investigateIncident3.update(investigateMe3);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(investigateIncident.getCaller(), "William");
+		}
 	}
 }
