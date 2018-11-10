@@ -368,5 +368,24 @@ public class ManagedIncidentTest {
 			assertEquals(closedStateTest.getCaller(), "William");
 		}
 		
+		Incident actualcloseStateTest = new Incident();
+		
+		actualcloseStateTest.setCaller("William");
+		actualcloseStateTest.setCategory(ManagedIncident.C_NETWORK);
+		actualcloseStateTest.setPriority(ManagedIncident.P_LOW);
+		actualcloseStateTest.setName("Things");
+		actualcloseStateTest.setWorkNotes(workNotes);
+		actualcloseStateTest.setState(ManagedIncident.CLOSED_NAME);
+		
+		ManagedIncident actuaulclosedStateTest = new ManagedIncident(actualcloseStateTest);
+		
+		Command closedMe = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			actuaulclosedStateTest.update(closedMe);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(closedStateTest.getCaller(), "William");
+		}
 	}
 }
