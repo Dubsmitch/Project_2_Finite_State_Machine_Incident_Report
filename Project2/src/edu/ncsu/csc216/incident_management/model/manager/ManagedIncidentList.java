@@ -86,6 +86,9 @@ public class ManagedIncidentList {
 	 * 			the filtered list of managed incidents
 	 */
 	public List<ManagedIncident> getIncidentsByCategory(Category category){
+		if (category == null) {
+			throw new IllegalArgumentException ("Category must be provided");
+		}
 		ArrayList<ManagedIncident> thingList = new ArrayList<ManagedIncident>(incidents.size());
 		for (int i = 0; i < incidents.size(); i++) {
 			if (incidents.get(i).getCategory() == category) {
