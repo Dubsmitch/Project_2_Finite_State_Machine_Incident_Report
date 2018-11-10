@@ -29,7 +29,7 @@ public class Command {
 	/** information about cancellation **/
 	public static final String CC_UNNECESSARY = "Unnecessary";
 	/** information about cancellation **/
-	public static final String CC_NOT_AN_INCIDENT = "Not and incident";
+	public static final String CC_NOT_AN_INCIDENT = "Not an Incident";
 	
 	/** field for ownerID **/
 	private String ownerId;
