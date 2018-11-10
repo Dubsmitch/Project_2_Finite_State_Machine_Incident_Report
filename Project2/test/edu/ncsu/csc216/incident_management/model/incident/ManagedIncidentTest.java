@@ -10,7 +10,12 @@ import edu.ncsu.csc216.incident.xml.Incident;
 import edu.ncsu.csc216.incident.xml.WorkNotes;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
-
+/**
+ * tests the Managed Incident class
+ * 
+ * @author William
+ *
+ */
 public class ManagedIncidentTest {
 	/**
 	 * testing first constructor
@@ -24,7 +29,7 @@ public class ManagedIncidentTest {
 		assertEquals(a.getCategory(), Category.INQUIRY);
 		assertEquals(a.getPriorityString(), ManagedIncident.P_URGENT);
 		assertEquals(a.getName(), "car stuff");
-		assertEquals(a.getNotesString(),"Calling cause stuff\n--\n");
+		assertEquals(a.getNotesString(), "Calling cause stuff\n--\n");
 				
 		assertEquals(a.getState().getStateName(), ManagedIncident.NEW_NAME);
 		assertEquals(a.getOwner(), null);

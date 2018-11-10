@@ -1,13 +1,11 @@
 package edu.ncsu.csc216.incident_management.model.manager;
 
-import java.awt.List;
-import java.io.Reader;
+
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.incident.io.IncidentIOException;
 import edu.ncsu.csc216.incident.io.IncidentReader;
 import edu.ncsu.csc216.incident.io.IncidentWriter;
-import edu.ncsu.csc216.incident.xml.Incident;
 import edu.ncsu.csc216.incident_management.model.command.Command;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
@@ -37,10 +35,13 @@ public class IncidentManager {
 	}
 	
 	/**
-	 * Checks for an instance of IncidentManager
-	 * if there is already an instance of the manager
-	 * then the current one is returned, else
-	 * one is created
+	 * checks for an instance of the incidentmanager,
+	 * if there is not one, one is made, else the
+	 * existing on is returned
+	 * 
+	 * @return IncidentManager
+	 * 			the single instance of the manager (or a new one if there
+	 * 			isnt already one
 	 */
 	public static IncidentManager getInstance() {
 		if (singleton == null) {
