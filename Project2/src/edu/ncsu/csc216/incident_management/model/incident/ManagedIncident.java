@@ -770,17 +770,19 @@ public class ManagedIncident {
 				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
-				resolutionCode = command.getResolutionCode();
-				onHoldReason = null;
+
 				notes.add(command.getWorkNote());
 				state = resolvedState;
+				resolutionCode = command.getResolutionCode();
+				onHoldReason = null;
 			//S3 user determines the incident should be cancelled
 			//clicks cancel; updates cancellation code;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
-				cancellationCode = command.getCancellationCode();
-				onHoldReason = null;
+
 				notes.add(command.getWorkNote());
 				state = canceledState;
+				cancellationCode = command.getCancellationCode();
+				onHoldReason = null;
 			// TODO Auto-generated method stub
 			}		
 		}
@@ -817,6 +819,8 @@ public class ManagedIncident {
 				//	changeRequest = command.getWorkNote();
 				//}
 				state = onHoldState;
+				onHoldReason = command.getOnHoldReason(); 
+				resolutionCode = null;
 			//S2 user selects to reopen
 			//state set to INPROGRESS, note is saved 
 			} else if (command.getCommand() == CommandValue.REOPEN) {
@@ -825,15 +829,18 @@ public class ManagedIncident {
 				//}
 				notes.add(command.getWorkNote());
 				state = inProgressState;
+				resolutionCode = null;
 			//S3 user confirms
 			//state to closed, note saved,  
 			} else if (command.getCommand() == CommandValue.CONFIRM) {				
 				notes.add(command.getWorkNote());
 				state = closedState;
+				resolutionCode = null;
 			} else if (command.getCommand() == CommandValue.CANCEL) {
 				cancellationCode = command.getCancellationCode();
 				notes.add(command.getWorkNote());
 				state = canceledState;
+				resolutionCode = null;
 				
 			}
 		}
