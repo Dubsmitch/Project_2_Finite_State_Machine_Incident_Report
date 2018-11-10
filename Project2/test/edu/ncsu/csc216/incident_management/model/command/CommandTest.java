@@ -38,6 +38,7 @@ public class CommandTest {
 		assertEquals(command.getWorkNote(), "Got It");
 		
 		try {
+			@SuppressWarnings("unused")
 			Command fake = new Command (null, "William",
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command must have a value");
@@ -48,6 +49,7 @@ public class CommandTest {
 		}
 		
 		try {
+			@SuppressWarnings("unused")
 			Command fake = new Command (CommandValue.INVESTIGATE, null,
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("owner must have a value if commandvalue=investigate");
@@ -58,6 +60,7 @@ public class CommandTest {
 		}
 		
 		try {
+			@SuppressWarnings("unused")
 			Command fake = new Command (CommandValue.HOLD, "William", 
 					null, null, null, "Got It");
 			fail("command of hold must have an onholdreason");
@@ -68,6 +71,7 @@ public class CommandTest {
 		}
 		
 		try {
+			@SuppressWarnings("unused")
 			Command fake = new Command (CommandValue.RESOLVE, "William",
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command of resolve must have a resolutionodew");
@@ -78,6 +82,7 @@ public class CommandTest {
 		}
 		
 		try {
+			@SuppressWarnings("unused")
 			Command fake = new Command (CommandValue.CANCEL, "William", 
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command must have a value");
