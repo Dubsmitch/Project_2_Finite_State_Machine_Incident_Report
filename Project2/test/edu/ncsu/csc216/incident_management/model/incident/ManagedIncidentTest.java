@@ -256,7 +256,7 @@ public class ManagedIncidentTest {
 		
 		ManagedIncident noPartnersno = new ManagedIncident(tooMuchtoo);
 
-		Command test501 = new Command (CommandValue.REOPEN, 
+		Command test501 = new Command (CommandValue.RESOLVE, 
 				"William", OnHoldReason.AWAITING_CHANGE, ResolutionCode.CALLER_CLOSED, CancellationCode.DUPLICATE,
 				"note");
 		noPartnersno.update(test501);
