@@ -68,7 +68,7 @@ public class Command {
 			OnHoldReason onHoldReason, ResolutionCode resolutionCode, 
 			CancellationCode cancellationCode, String note) {
 	
-	if (note == null) {
+	if (note == null || note.equals("")) {
 		throw new IllegalArgumentException("Cannot have a null note");
 	}
 	
