@@ -109,8 +109,9 @@ public class ManagedIncidentList {
 	}
 	/**
 	 * executes a given command
-	 * @param i
-	 * 			unsure
+	 * 
+	 * @param id
+	 * 			the id of the incident to be updated
 	 * @param c
 	 * 			the command to be executed
 	 */
