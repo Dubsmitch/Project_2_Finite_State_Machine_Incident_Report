@@ -835,7 +835,7 @@ public class ManagedIncident {
 			} else if (command.getCommand() == CommandValue.CONFIRM) {				
 				notes.add(command.getWorkNote());
 				state = closedState;
-				resolutionCode = null;
+				
 			} else if (command.getCommand() == CommandValue.CANCEL) {
 				cancellationCode = command.getCancellationCode();
 				notes.add(command.getWorkNote());
@@ -911,9 +911,6 @@ public class ManagedIncident {
 		public void updateState(Command command) {
 			if (command.getCommand() == CommandValue.REOPEN) {
 				notes.add(command.getWorkNote());
-				//if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
-				//	changeRequest = command.getWorkNote();
-				//}
 				state = inProgressState;
 			} else if (command.getCommand() == CommandValue.CONFIRM) {
 				throw new UnsupportedOperationException ("invaild command");
