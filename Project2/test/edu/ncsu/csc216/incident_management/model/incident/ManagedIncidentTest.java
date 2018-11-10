@@ -469,6 +469,58 @@ public class ManagedIncidentTest {
 		
 		investigateIncident4.update(investigateMe4);
 		assertEquals(investigateIncident4.getCaller(), "William");
+
+		Incident newTest = new Incident();
 		
+		newTest.setCaller("William");
+		newTest.setCategory(ManagedIncident.C_NETWORK);
+		newTest.setPriority(ManagedIncident.P_LOW);
+		newTest.setName("Things");
+		newTest.setWorkNotes(workNotes);
+		newTest.setState(ManagedIncident.NEW_NAME);
+		
+		ManagedIncident newIncident = new ManagedIncident(newTest);
+		
+		Command newMe = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			newIncident.update(newMe);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(newIncident.getCaller(), "William");
+		}
+		
+		ManagedIncident newIncident1 = new ManagedIncident(newTest);
+		
+		Command newMe1 = new Command (CommandValue.CONFIRM, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			newIncident1.update(newMe1);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(newIncident1.getCaller(), "William");
+		}
+		
+		ManagedIncident newIncident2 = new ManagedIncident(newTest);
+		
+		Command newMe2 = new Command (CommandValue.REOPEN, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			newIncident2.update(newMe2);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(newIncident2.getCaller(), "William");
+		}
+		
+		ManagedIncident newIncident3 = new ManagedIncident(newTest);
+		
+		Command newMe3 = new Command (CommandValue.RESOLVE, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			newIncident3.update(newMe3);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(newIncident3.getCaller(), "William");
+		}
 	}
 }
