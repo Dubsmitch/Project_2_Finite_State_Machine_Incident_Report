@@ -11,7 +11,11 @@ import edu.ncsu.csc216.incident.xml.WorkNotes;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Priority;
-
+/**
+ * this class tests the managed incident list.
+ * @author William
+ *
+ */
 public class ManagedIncidentListTest {
 	/**
 	 * tests the constructor
