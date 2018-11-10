@@ -889,6 +889,8 @@ public class ManagedIncident {
 				//	changeRequest = command.getWorkNote();
 				//}
 				state = inProgressState;
+			} else if (command.getCommand() == CommandValue.CONFIRM) {
+				throw new UnsupportedOperationException ("invaild command");
 			}
 		}
 		/**
