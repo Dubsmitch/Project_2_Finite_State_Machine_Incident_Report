@@ -912,6 +912,7 @@ public class ManagedIncident {
 			if (command.getCommand() == CommandValue.REOPEN) {
 				notes.add(command.getWorkNote());
 				state = inProgressState;
+				resolutionCode = null;
 			} else if (command.getCommand() == CommandValue.CONFIRM) {
 				throw new UnsupportedOperationException ("invaild command");
 			} else if (command.getCommand() == CommandValue.RESOLVE) {
