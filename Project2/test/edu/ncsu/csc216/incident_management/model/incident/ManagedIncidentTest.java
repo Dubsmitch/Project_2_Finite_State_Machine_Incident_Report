@@ -35,36 +35,43 @@ public class ManagedIncidentTest {
 		
 		//try to make some impossible objects with null values
 		try {
-			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
+			@SuppressWarnings("unused")
+			ManagedIncident c = new ManagedIncident("", Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
 			fail("Cannot instantiate object without a caller");
 		} catch (IllegalArgumentException e) {
-			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
-			
+			//adding caller fixes the problem
+			ManagedIncident c = new ManagedIncident("William" , Category.INQUIRY, Priority.URGENT, "car stuff", "Calling cause stuff");
+			assertEquals(c.getCaller(), "William");
 		}
 		
 		
 		try {
+			@SuppressWarnings("unused")
 			ManagedIncident c = new ManagedIncident("William" , null, Priority.URGENT, "car stuff", "Calling cause stuff");
 			fail("Cannot instantiate object without a Category");
 		} catch (IllegalArgumentException e) {
+			ManagedIncident c = new ManagedIncident("William" , Category.DATABASE, Priority.URGENT, "car stuff", "Calling cause stuff");
+			assertEquals(c.getCategory(), Category.DATABASE);
 		}
 		
 		try {
-			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, null, "car stuff", "Calling cause stuff");
+			@SuppressWarnings("unused")
+			ManagedIncident c = new ManagedIncident("William" , Category.INQUIRY, null, "car stuff", "Calling cause stuff");
 			fail("Cannot instantiate object without a caller");
 		} catch (IllegalArgumentException e) {
+			ManagedIncident c = new ManagedIncident("William" , Category.INQUIRY, Priority.LOW, "car stuff", "Calling cause stuff");
+			//adding a priority fixes the problem
+			assertEquals(c.getPriorityString(), ManagedIncident.P_LOW);
 		}
 		
-		try {
-			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, null, "Calling cause stuff");
-			fail("Cannot instantiate object without a caller");
-		} catch (IllegalArgumentException e) {
-		}
 		
 		try {
-			ManagedIncident c = new ManagedIncident(null , Category.INQUIRY, Priority.URGENT, "car stuff", null);
+			@SuppressWarnings("unused")
+			ManagedIncident c = new ManagedIncident("" , Category.INQUIRY, Priority.URGENT, "car stuff", "notes");
 			fail("Cannot instantiate object without a caller");
 		} catch (IllegalArgumentException e) {
+			ManagedIncident c = new ManagedIncident("William" , Category.INQUIRY, Priority.URGENT, "car stuff", "notes");
+			assertEquals(c.getCaller(), "William");
 		}
 	}
 	
