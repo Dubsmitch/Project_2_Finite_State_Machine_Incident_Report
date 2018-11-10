@@ -114,12 +114,7 @@ public class ManagedIncident {
 	 */
 	public ManagedIncident (String caller, Category category, Priority priority, String name, String workNote) {
 		if (caller.equals("") ||  
-				category == null || 
-				priority == null || 
-				name.equals("") ||
-				name == null ||
-				workNote.equals("") 
-				|| workNote == null) {
+				category == null || priority == null || name.equals("") || workNote.equals("")) {
 			throw new IllegalArgumentException ("no fields can be null or empty");
 		}
 		
