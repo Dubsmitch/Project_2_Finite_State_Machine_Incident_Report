@@ -458,6 +458,9 @@ public class ManagedIncident {
 	 * 		the resolution code associated with the Incident
 	 */
 	public ResolutionCode getResolutionCode() {
+		if (this.getState() != resolvedState) {
+			resolutionCode = null;
+		}
 		return this.resolutionCode;
 	}
 	/**
