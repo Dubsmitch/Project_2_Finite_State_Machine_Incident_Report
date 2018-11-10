@@ -78,4 +78,6 @@ public class IncidentManagerTest {
 		
 		assertEquals(manager.getList().getManagedIncidents().size(), 5);
 	}
+	
+	
 }

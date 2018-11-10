@@ -37,7 +37,9 @@ public class CommandTest {
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command must have a value");
 		} catch (IllegalArgumentException e) {
-			
+			Command fake = new Command (CommandValue.HOLD, "William",
+					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
+			assertEquals(fake.getCommand(), CommandValue.HOLD);
 		}
 		
 		try {
@@ -45,7 +47,9 @@ public class CommandTest {
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("owner must have a value if commandvalue=investigate");
 		} catch (IllegalArgumentException e) {
-			
+			Command fake = new Command (CommandValue.HOLD, "William",
+					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
+			assertEquals(fake.getOwnerId(), "William");
 		}
 		
 		try {
@@ -53,7 +57,9 @@ public class CommandTest {
 					null, null, null, "Got It");
 			fail("command of hold must have an onholdreason");
 		} catch (IllegalArgumentException e) {
-			
+			Command fake = new Command (CommandValue.HOLD, "William",
+					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
+			assertEquals(fake.getOwnerId(), "William");
 		}
 		
 		try {
@@ -61,7 +67,9 @@ public class CommandTest {
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command of resolve must have a resolutionodew");
 		} catch (IllegalArgumentException e) {
-			
+			Command fake = new Command (CommandValue.RESOLVE, "William",
+					OnHoldReason.AWAITING_CHANGE, ResolutionCode.CALLER_CLOSED, null, "Got It");
+			assertEquals(fake.getCommand(), CommandValue.RESOLVE);
 		}
 		
 		try {
@@ -69,7 +77,9 @@ public class CommandTest {
 					OnHoldReason.AWAITING_CHANGE, null, null, "Got It");
 			fail("command must have a value");
 		} catch (IllegalArgumentException e) {
-			
+			Command fake = new Command (CommandValue.CANCEL, "William", 
+					OnHoldReason.AWAITING_CHANGE, null, CancellationCode.DUPLICATE, "Got It");
+			assertEquals(fake.getCommand(), CommandValue.CANCEL);
 		}
 		
 		Command testing = new Command(CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CHANGE, 
