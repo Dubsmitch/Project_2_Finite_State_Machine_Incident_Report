@@ -305,7 +305,7 @@ public class ManagedIncidentTest {
 		
 		Command newStateCommand212 = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, null, CancellationCode.DUPLICATE, "note");
 		resolvedNow.update(newStateCommand212);
-		assertEquals(resolvedNow.getState().getStateName(), ManagedIncident.ON_HOLD_NAME);
+		assertEquals(resolvedNow.getState().getStateName(), ManagedIncident.CANCELED_NAME);
 		
 	}
 }
