@@ -387,5 +387,38 @@ public class ManagedIncidentTest {
 		} catch (UnsupportedOperationException e) {
 			assertEquals(closedStateTest.getCaller(), "William");
 		}
+		
+		ManagedIncident actuaulclosedStateTest1 = new ManagedIncident(actualcloseStateTest);
+		
+		Command closedMe1 = new Command (CommandValue.RESOLVE, "William", OnHoldReason.AWAITING_CALLER, ResolutionCode.NOT_SOLVED, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			actuaulclosedStateTest1.update(closedMe1);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(actuaulclosedStateTest1.getCaller(), "William");
+		}
+		
+		ManagedIncident actuaulclosedStateTest2 = new ManagedIncident(actualcloseStateTest);
+		
+		Command closedMe2 = new Command (CommandValue.HOLD, "William", OnHoldReason.AWAITING_CALLER, ResolutionCode.NOT_SOLVED, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			actuaulclosedStateTest2.update(closedMe2);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(actuaulclosedStateTest2.getCaller(), "William");
+		}
+		
+		ManagedIncident actuaulclosedStateTest3 = new ManagedIncident(actualcloseStateTest);
+		
+		Command closedMe3 = new Command (CommandValue.CANCEL, "William", OnHoldReason.AWAITING_CALLER, ResolutionCode.NOT_SOLVED, CancellationCode.DUPLICATE, "note");
+		
+		try {
+			actuaulclosedStateTest3.update(closedMe3);
+			fail("should thow an exception");
+		} catch (UnsupportedOperationException e) {
+			assertEquals(actuaulclosedStateTest2.getCaller(), "William");
+		}
 	}
 }
