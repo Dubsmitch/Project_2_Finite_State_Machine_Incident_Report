@@ -119,7 +119,7 @@ public class ManagedIncident {
 		
 		//incidentId, caller, category, state, priority, owner, name, onHoldReason, 
 		//changeRequest, resolutionCode, cancellationCode, and all of its notes
-		if (caller.length() < 1) {
+		if (caller == null || caller.length() < 1) {
 			throw new IllegalArgumentException ("Caller must have more than 1 letter");
 		}
 		//if (category != Category.DATABASE || category != Category.HARDWARE || category != Category.INQUIRY
