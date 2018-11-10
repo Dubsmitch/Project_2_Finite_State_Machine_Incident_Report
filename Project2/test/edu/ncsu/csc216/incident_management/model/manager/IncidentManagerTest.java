@@ -5,7 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.ncsu.csc216.incident_management.model.incident.ManagedIncident.Category;
-
+/**
+ * the class that tests the incident Manager
+ * class
+ * 
+ * @author William
+ *
+ */
 public class IncidentManagerTest {
 	/**
 	 * test the singleton and loading incidents from file
