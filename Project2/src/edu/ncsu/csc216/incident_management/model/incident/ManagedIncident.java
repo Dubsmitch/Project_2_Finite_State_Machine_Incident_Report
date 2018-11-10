@@ -758,7 +758,6 @@ public class ManagedIncident {
 			//The user is returned to the incident list [UC2] and the incident’s 
 			//listing reflects the updated state.
 			if (command.getCommand() == CommandValue.REOPEN) {
-				notes.add(command.getWorkNote());
 				if (command.getOnHoldReason() == OnHoldReason.AWAITING_CHANGE) {
 					changeRequest = command.getWorkNote();
 				}
