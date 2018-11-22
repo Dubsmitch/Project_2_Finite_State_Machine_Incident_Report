@@ -35,7 +35,7 @@ public class IncidentManager {
 	}
 	
 	/**
-	 * checks for an instance of the incidentmanager,
+	 * checks for an instance of the IncidentManager,
 	 * if there is not one, one is made, else the
 	 * existing on is returned
 	 * 
